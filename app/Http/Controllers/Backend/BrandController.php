@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -79,5 +80,59 @@ class BrandController extends Controller
         $brand->number = $request->input('number');
         $brand->save();
         return redirect()->route('brand.index')->with('success', 'Brand updated successfully!');
+    }
+
+    public function member($id){
+        $members = User::where('brand_id' , $id)->get();
+        $brand = Brand::find($id);
+        return view('backend.admin.brand.member', compact('members' , 'id' , 'brand'));
+    }
+
+    public function addMember($id){
+        $brand = Brand::find($id);
+        return view('backend.admin.brand.add-member', compact('brand'));
+    }
+
+    public function saveMember(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'brand_id' => 'required'
+        ]);
+        $user = new User();
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password'));
+        $user->brand_id = $request->input('brand_id');
+        $user->role = 'brand_member';
+        $user->save();
+        return redirect()->route('brand.member' , $request->input('brand_id'))->with('success', 'Member Added Successfully' );
+    }
+
+    public function editMember($id){
+        $member = User::find($id);
+
+        return view('backend.admin.brand.member-edit', compact('member'));
+
+    }
+    public function updateMember(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+        ]);
+
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect('admin/brand-member/'. $user->brand_id)->with('success', 'User updated successfully');
+    }
+    public function deleteMember($id){
+    $member = User::find($id);
+    $member->delete();
+    return redirect()->back()->with('success', 'Member Deleted Successfully');
     }
 }
