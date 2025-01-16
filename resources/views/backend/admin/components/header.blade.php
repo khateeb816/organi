@@ -40,6 +40,7 @@
         Preloader end
     ********************-->
     <style>
+
         .alert-container {
             position: fixed;
             top: 20px;

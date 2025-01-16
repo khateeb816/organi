@@ -171,17 +171,17 @@
                                 <div class="dropdown-content-body">
                                     <ul>
                                         <li>
-                                            <a href="{{ url('app-profile.html') }}"><i class="icon-user"></i> <span>Profile</span></a>
+                                            <a href="{{ url('app-profile.html') }}" style="text-decoration: none; color:black;"><i class="icon-user"></i> <span>Profile</span></a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void()">
+                                            <a href="javascript:void()" style="text-decoration: none; color:black;">
                                                 <i class="icon-envelope-open"></i> <span>Inbox</span> <div class="badge gradient-3 badge-pill gradient-1">3</div>
                                             </a>
                                         </li>
 
                                         <hr class="my-2">
 
-                                        <li><a href="{{ url('/logout') }}"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                        <li><a href="{{ url('/logout') }}" style="text-decoration: none; color:black;"><i class="icon-key"></i> <span>Logout</span></a></li>
                                     </ul>
                                 </div>
                             </div>
