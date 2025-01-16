@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('backend.auth.login');
+        return view('backend.admin.auth.login');
     }
 
     public function login(Request $request)
@@ -42,6 +42,6 @@ class AuthController extends Controller
     public function showDashboard()
     {
 
-        return view('backend.dashboard.index');
+        return view('backend.admin.dashboard.index');
     }
 }

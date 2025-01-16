@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AuthController;
+use App\Http\Controllers\backend\BrandController;
 use App\Http\Controllers\Backend\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,9 +45,23 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     // user page
 
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
-    
+
     Route::get('/user-add', [UserController::class, 'add'])->name('user.add');
 
 
+
+    // brand Page
+
+    Route::get('/brand', [BrandController::class, 'index'])->name('brand.index');
+
+    Route::get('/brand-add', [BrandController::class, 'add'])->name('brand.add');
+
+    Route::post('/brand-save', [BrandController::class, 'save'])->name('brand.save');
+
+    Route::get('/brand-delete/{id}', [BrandController::class, 'delete'])->name('brand.delete');
+
+    Route::get('/brand-edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
+
+    Route::post('/brand-update/{id}', [BrandController::class, 'update'])->name('brand.update');
 
 });
