@@ -64,4 +64,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::post('/brand-update/{id}', [BrandController::class, 'update'])->name('brand.update');
 
+    Route::get('/brand-member/{id}', [BrandController::class, 'member'])->name('brand.member');
+
 });

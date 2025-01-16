@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -79,5 +80,11 @@ class BrandController extends Controller
         $brand->number = $request->input('number');
         $brand->save();
         return redirect()->route('brand.index')->with('success', 'Brand updated successfully!');
+    }
+
+    public function member($id){
+        $members = User::where('brand_id' , $id)->get();
+        $brand = Brand::find($id);
+        return view('backend.admin.brand.member', compact('members' , 'id' , 'brand'));
     }
 }
