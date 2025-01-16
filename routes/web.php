@@ -44,11 +44,15 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     // user page
 
-    Route::get('/user', [UserController::class, 'index'])->name('user.index');
-
     Route::get('/user-add', [UserController::class, 'add'])->name('user.add');
 
+    Route::post('/user-save', [UserController::class, 'save'])->name('user.save');
 
+    Route::get('/user-delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+
+    Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+
+    Route::post('/user-update/{id}', [UserController::class, 'update'])->name('user.update');
 
     // brand Page
 
@@ -65,5 +69,4 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::post('/brand-update/{id}', [BrandController::class, 'update'])->name('brand.update');
 
     Route::get('/brand-member/{id}', [BrandController::class, 'member'])->name('brand.member');
-
 });
