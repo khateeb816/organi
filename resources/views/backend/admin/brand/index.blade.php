@@ -3,7 +3,6 @@
 @include('backend.admin.components.aside')
 
 <!-- Include Bootstrap 5 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <div class="content-body p-3 bg-light">
     <a href="{{ url('admin/brand-add') }}" class="btn btn-info">Add Brand</a>

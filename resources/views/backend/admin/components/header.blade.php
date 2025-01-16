@@ -20,6 +20,7 @@
         href="{{ asset('/backendAssets/plugins/chartist-plugin-tooltips/css/chartist-plugin-tooltip.css') }}">
     <!-- Custom Stylesheet -->
     <link href="{{ asset('/backendAssets/css/style.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.bootstrap5.css">
 </head>
 
@@ -40,6 +41,10 @@
         Preloader end
     ********************-->
     <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
 
         .alert-container {
             position: fixed;
@@ -95,14 +100,16 @@
             @foreach ($errors->all() as $error)
                 <div class="alert alert-danger alert-popup" role="alert">
                     {{ $error }}
-                    <button type="button" class="btn-close" aria-label="Close" onclick="this.parentElement.style.display='none';"></button>
+                    <button type="button" class="btn-close" aria-label="Close"
+                        onclick="this.parentElement.style.display='none';"></button>
                 </div>
             @endforeach
         @endif
         @if (session('success'))
             <div class="alert alert-success alert-popup" role="alert">
                 {{ session('success') }}
-                <button type="button" class="btn-close" aria-label="Close" onclick="this.parentElement.style.display='none';"></button>
+                <button type="button" class="btn-close" aria-label="Close"
+                    onclick="this.parentElement.style.display='none';"></button>
             </div>
         @endif
     </div>
