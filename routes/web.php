@@ -32,14 +32,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     // ====================   dashboard
-    Route::get('/dash', [AuthController::class, 'showDashboard'])->name('dashboard');
-
-
-
-
-
-
-
+Route::get('/dash', [AuthController::class, 'showDashboard'])->name('dashboard');
     // ========================user
 
     // user page
@@ -48,6 +41,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::get('/user-add', [UserController::class, 'add'])->name('user.add');
 
+    Route::post('/user-save', [UserController::class, 'save'])->name('user.save');
+
+    Route::get('/user-delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+
+    Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+
+    Route::post('/user-update/{id}', [UserController::class, 'update'])->name('user.update');
 
 
     // brand Page
