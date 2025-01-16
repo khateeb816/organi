@@ -18,28 +18,13 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                {{-- <div class="form-group mb-4">
-                                    <input type="file" name="image" class="form-control" id="image" accept=".jpeg,.jpg,.png,.gif">
-                                    <label for="image" class="form-label">Current Image:</label>
-                                    @if ($catagory->logo)
-                                        <img src="{{ asset($catagory->logo) }}" alt="Current Image" width="100" height="100" class="mb-2">
-                                    @endif
-                                    @error('image')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div> --}}
                                 <div class="form-group">
                                     <input type="text" name="description" class="form-control input-default" placeholder="Enter Discription" value="{{ old('description', $catagory->description) }}" required>
                                     @error('description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                {{-- <div class="form-group">
-                                    <input type="text" name="number" class="form-control input-default" placeholder="Enter Contact Number" value="{{ old('number', $catagory->number) }}" required>
-                                    @error('number')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div> --}}
+
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-dark mb-2">Update catagory</button>
                                 </div>
