@@ -26,6 +26,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ url('/admin/catagory') }}" aria-expanded="false">
+                            <i class="icon-badge menu-icon"></i><span class="nav-text">Catagory</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ url('/admin/brand') }}" aria-expanded="false">
                             <i class="icon-badge menu-icon"></i><span class="nav-text">Brands</span>
                         </a>

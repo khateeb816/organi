@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AuthController;
-use App\Http\Controllers\backend\BrandController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\backend\BrandController;
+use App\Http\Controllers\Backend\CatagoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +49,18 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::get('/user-add', [UserController::class, 'add'])->name('user.add');
 
+    //  Catagory Page
+    Route::get('/catagory', [CatagoryController::class, 'index'])->name('catagory.index');
 
+    Route::get('/catagory-add', [CatagoryController::class, 'add'])->name('catagory.add');
+
+    Route::post('/catagory-save', [CatagoryController::class, 'save'])->name('catagory.save');
+
+    Route::get('/catagory-delete/{id}', [CatagoryController::class, 'delete'])->name('catagory.delete');
+
+    Route::get('/catagory-edit/{id}', [CatagoryController::class, 'edit'])->name('catagory.edit');
+
+    Route::post('/catagory-update/{id}', [CatagoryController::class, 'update'])->name('catagory.update');
 
     // brand Page
 
