@@ -18,8 +18,11 @@ class Brand extends Model
         'name',
         'logo',
         'address',
+        'email',
         'number',
+        'percent_charge',
     ];
+
 
     /**
      * The attributes that should be cast to native types.

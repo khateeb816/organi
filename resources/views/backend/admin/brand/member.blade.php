@@ -5,7 +5,7 @@
 <!-- Include Bootstrap 5 CSS -->
 
 <div class="content-body p-3 bg-light">
-    <h2 class="mb-4">Members of Brand: {{ $brand->name }}</h2> <!-- Add the brand name heading -->
+    <h2 class="mb-4">Members of Brand: <a href="{{url('admin/brand-view/' . $id)}}" style="text-decoration: underline;"> {{ $brand->name }}</a></h2> <!-- Add the brand name heading -->
 
     <a href="{{ url('admin/member-add/' . $id) }}" class="btn btn-info">Add Member</a>
     <table id="table" class="display w-100">

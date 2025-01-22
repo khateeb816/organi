@@ -12,7 +12,7 @@
                 <th>Sno.</th>
                 <th>Name</th>
                 <th>Logo</th>
-                <th>Address</th>
+                <th>Email</th>
                 <th>Number</th>
                 <th>Actions</th>
             </tr>
@@ -25,12 +25,10 @@
                     <td>
                         <img src="{{ asset($brand->logo) }}" alt="" width="50" height="50">
                     </td>
-                    <td>{{ $brand->address }}</td>
+                    <td>{{ $brand->email }}</td>
                     <td>{{ $brand->number }}</td>
                     <td>
-                        <a href="{{ url('admin/brand-member/' . $brand->id) }}" class="btn btn-warning">Members</a>
-                        <a href="{{ url('admin/brand-edit/' . $brand->id) }}" class="btn btn-primary">Edit</a>
-                        <a href="{{ url('admin/brand-delete/' . $brand->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this brand?');">Delete</a>
+                        <a href="{{ url('admin/brand-view/' . $brand->id) }}" class="btn btn-primary">View</a>
                     </td>
                 </tr>
             @endforeach

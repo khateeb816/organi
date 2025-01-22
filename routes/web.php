@@ -44,12 +44,20 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     // ========================user
 
     // user page
-
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
 
     Route::get('/user-add', [UserController::class, 'add'])->name('user.add');
 
-    //  Catagory Page
+    Route::post('/user-save', [UserController::class, 'save'])->name('user.save');
+
+    Route::get('/user-delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+
+    Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+
+    Route::post('/user-update/{id}', [UserController::class, 'update'])->name('user.update');
+
+    // Category Routes
+
     Route::get('/catagory', [CatagoryController::class, 'index'])->name('catagory.index');
 
     Route::get('/catagory-add', [CatagoryController::class, 'add'])->name('catagory.add');
@@ -72,8 +80,23 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::get('/brand-delete/{id}', [BrandController::class, 'delete'])->name('brand.delete');
 
+    Route::get('/brand-view/{id}', [BrandController::class, 'view'])->name('brand.view');
+
     Route::get('/brand-edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
+
+    Route::post('/update-brand-image/{id}', [BrandController::class, 'updateBrandImage'])->name('updateBrandImage');
 
     Route::post('/brand-update/{id}', [BrandController::class, 'update'])->name('brand.update');
 
+    Route::get('/brand-member/{id}', [BrandController::class, 'member'])->name('brand.member');
+
+    Route::get('/member-add/{id}', [BrandController::class, 'addMember'])->name('member.add');
+
+    Route::post('/member-save', [BrandController::class, 'saveMember'])->name('member.save');
+
+    Route::get('/member-edit/{id}', [BrandController::class, 'editMember'])->name('member.edit');
+
+    Route::post('/member-update/{id}', [BrandController::class, 'updateMember'])->name('member.update');
+
+    Route::get('/member-delete/{id}', [BrandController::class, 'deleteMember'])->name('member.delete');
 });

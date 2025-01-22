@@ -16,7 +16,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('logo');
             $table->string('address');
+            $table->string('email');
+            $table->string('url')->nullable();
             $table->string('number');
+            $table->string('allowed_categories')->nullable();
+            $table->string('description')->nullable();
+            $table->string('status')->default('Pending');
+            $table->string('percent_charge');
             $table->timestamps();
         });
     }

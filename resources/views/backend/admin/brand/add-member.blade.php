@@ -8,6 +8,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        <a href="{{url('/admin/brand-member/' . $brand->id)}}" class="btn btn-info">go Back</a>
                         <h4 class="card-title my-3">Add Member to Brand</h4>
                         <div class="basic-form">
                             <form action="{{ url('admin/member-save') }}" method="POST" enctype="multipart/form-data">
