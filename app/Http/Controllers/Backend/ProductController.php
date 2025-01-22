@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Catagory;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -55,6 +56,8 @@ class ProductController extends Controller
             'color' => json_encode($request->color), // Encode the array to JSON for database storage
             'size' => json_encode($request->size),   // Encode the array to JSON for database storage
             'catagory_id' => $request->catagory_id,
+            'brand_id' => Auth::user()->brand_id,
+            'created_at' => now(),
         ]);
 
         // Redirect with a success message

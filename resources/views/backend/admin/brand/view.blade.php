@@ -77,7 +77,7 @@
                                     <div class="nav flex-column nav-pills">
                                         <a class="nav-link active" href="#"><i
                                                 class="fas fa-user me-2"></i>Personal Info</a>
-                                        <a class="nav-link" href="#"><i
+                                        <a class="nav-link" href="{{ url('admin/brand-product/' . $brand->id) }}"><i
                                                 class="fa-solid fa-bag-shopping me-2"></i>Products</a>
                                         <a class="nav-link" href="{{ url('admin/brand-member/' . $brand->id) }}"><i
                                                 class="fa-solid fa-people-arrows me-2"></i>Members</a>
@@ -87,87 +87,74 @@
 
                             <div class="col-lg-9">
                                 <div class="p-4" id="content">
-                                    <div class="row">
+                                    <div class="row mb-3">
                                         <button id="editBrandBtn" class="btn btn-light col-6"><i
                                                 class="fas fa-edit me-2"></i>Edit Brand</button>
                                         <a href="{{ url('admin/brand-delete/' . $brand->id) }}"
                                             class="btn btn-outline-danger col-6" id="deleteBrandBtn">
                                             <i class="fa-solid fa-trash me-2"></i>Delete Brand
                                         </a>
-
                                     </div>
                                     <form id="brandForm" class="m-4"
-                                        action="{{ url('admin/brand-update/' . $brand->id) }}" method="post"
+                                        action="{{ url('admin/brand-update/' . $brand->id) }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <h5 class="col-6 mb-4">Brand Information</h5>
 
                                         <div class="row g-3">
                                             <div class="col-md-12">
-                                                <label class="form-label">Name</label>
-                                                <input name="name" type="text" class="form-control"
+                                                <label for="name" class="form-label">Name</label>
+                                                <input name="name" type="text" class="form-control" id="name"
                                                     value="{{ $brand->name }}" disabled>
                                             </div>
                                             <div class="col-md-6">
-                                                <label class="form-label">Email</label>
-                                                <input name="email" type="email" class="form-control"
+                                                <label for="email" class="form-label">Email</label>
+                                                <input name="email" type="email" class="form-control" id="email"
                                                     value="{{ $brand->email }}" disabled>
                                             </div>
                                             <div class="col-md-6">
-                                                <label class="form-label">Phone</label>
-                                                <input name="number" type="tel" class="form-control"
+                                                <label for="number" class="form-label">Phone</label>
+                                                <input name="number" type="tel" class="form-control" id="number"
                                                     value="{{ $brand->number }}" disabled>
                                             </div>
                                             <div class="col-12">
-                                                <label class="form-label">Bio</label>
-                                                <textarea name="description" class="form-control" rows="4" disabled>{{ $brand->description }}</textarea>
+                                                <label for="description" class="form-label">Bio</label>
+                                                <textarea name="description" class="form-control" id="description" rows="4" disabled>{{ $brand->description }}</textarea>
                                             </div>
                                             <div class="col-12">
-                                                <label class="form-label">Physical Address</label>
-                                                <textarea name="address" class="form-control" rows="4" disabled>{{ $brand->address }}</textarea>
+                                                <label for="address" class="form-label">Physical Address</label>
+                                                <textarea name="address" class="form-control" id="address" rows="4" disabled>{{ $brand->address }}</textarea>
                                             </div>
                                             <div class="col-12">
-                                                <label class="form-label">Status</label>
-                                                <select name="status" class="form-select" disabled>
-                                                    <option value="Active"
-                                                        @if ($brand->status === 'Active') selected @endif>Active
-                                                    </option>
-                                                    <option value="Pending"
-                                                        @if ($brand->status === 'Pending') selected @endif>Pending
-                                                    </option>
-                                                    <option value="Blocked"
-                                                        @if ($brand->status === 'Blocked') selected @endif>Blocked
-                                                    </option>
+                                                <label for="status" class="form-label">Status</label>
+                                                <select name="status" class="form-select" id="status" disabled>
+                                                    <option value="Active" @if ($brand->status === 'Active') selected @endif>Active</option>
+                                                    <option value="Pending" @if ($brand->status === 'Pending') selected @endif>Pending</option>
+                                                    <option value="Blocked" @if ($brand->status === 'Blocked') selected @endif>Blocked</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="categories">Select Categories:</label>
+                                                <label for="categories" class="form-label">Select Categories:</label>
                                                 <div class="form-check">
-                                                    @if (count($categories) > 0)
+                                                    @if ($categories->isNotEmpty())
                                                         @php
-
-                                                            $allowed_categories = json_decode(
-                                                                $brand->allowed_categories,
-                                                            );
+                                                            $allowed_categories = json_decode($brand->allowed_categories, true) ?? [];
                                                         @endphp
                                                         @foreach ($categories as $category)
-                                                            <div class="form-check">
-                                                                <input type="checkbox" name="categories[]"
-                                                                    class="form-check-input categories"
-                                                                    value="{{ $category->id }}"
-                                                                    id="category_{{ $category->id }}"
-                                                                    {{ in_array($category->id, $allowed_categories) ? 'checked' : '' }}
+                                                            @if ($category !== null)
+                                                                <div class="form-check">
+                                                                    <input type="checkbox" name="categories[]"
+                                                                        class="form-check-input categories"
+                                                                        value="{{ $category->id }}"
+                                                                        id="category_{{ $category->id }}"
+                                                                        {{ in_array($category->id, $allowed_categories) ? 'checked' : '' }} disabled>
                                                                     <label class="form-check-label"
-                                                                    for="category_{{ $category->id }}"
-                                                                    disabled>{{ $category->name }}</label>
-                                                            </div>
+                                                                        for="category_{{ $category->id }}">{{ $category->name }}</label>
+                                                                </div>
+                                                            @endif
                                                         @endforeach
                                                     @else
-                                                        <div class="form-check">
-                                                            <label class="form-check-label" for="category">No category
-                                                                available</label>
-                                                        </div>
-
+                                                        <div class="text-muted">No categories available</div>
                                                     @endif
                                                 </div>
                                                 @error('categories')
@@ -187,8 +174,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="uploadImageModal" tabindex="-1" aria-labelledby="uploadImageModalLabel"
-    aria-hidden="true">
+
+<div class="modal fade" id="uploadImageModal" tabindex="-1" aria-labelledby="uploadImageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -201,8 +188,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="brandImage" class="form-label">Select Image</label>
-                        <input type="file" class="form-control" id="brandImage" name="brandImage"
-                            accept="image/*">
+                        <input type="file" class="form-control" id="brandImage" name="brandImage" accept="image/*">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -217,25 +203,17 @@
 @include('backend.admin.components.footer')
 
 <script>
-    document.getElementById('editBrandBtn').addEventListener('click', function() {
-        document.querySelectorAll('#brandForm input, #brandForm textarea, #brandForm select').forEach(function(
-            input) {
+    document.getElementById('editBrandBtn').addEventListener('click', () => {
+        document.querySelectorAll('#brandForm input, #brandForm textarea, #brandForm select, .categories').forEach((input) => {
             input.disabled = false;
         });
-
-        document.querySelectorAll('.categories').forEach(function(
-            input) {
-            input.disabled = false;
-        });
-
         document.getElementById('saveBtn').disabled = false;
     });
 
-    document.getElementById('deleteBrandBtn').addEventListener('click', function(event) {
+    document.getElementById('deleteBrandBtn').addEventListener('click', (event) => {
         event.preventDefault();
-
         if (confirm('Are you sure you want to delete this brand? This action cannot be undone.')) {
-            window.location.href = this.href;
+            window.location.href = event.target.href;
         }
     });
 </script>

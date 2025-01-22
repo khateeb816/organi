@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Catagory;
 use App\Models\User;
+use App\Models\Brand;
+use App\Models\Product;
+use App\Models\Catagory;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class BrandController extends Controller
@@ -31,8 +32,8 @@ class BrandController extends Controller
             'number' => 'required|string|max:15|regex:/^\+?[0-9]{10,15}$/',
             'email' => 'required|email|max:255',
             'description' => 'nullable|string',
-            'charge' => 'nullable|numeric|min:0|max:100',
-            'categories' => 'nullable|array',
+            'charge' => 'required|numeric|min:0|max:100',
+            'categories' => 'required|array',
         ]);
 
         $image = $request->file('image');
@@ -49,7 +50,7 @@ class BrandController extends Controller
         $brand->percent_charge = $request->input('charge');
         $brand->description = $request->input('description');
 
-        $brand->allowed_categories = $request->has('categories') ? json_encode($request->input('categories')) : null;
+        $brand->allowed_categories = $request->has('categories') ? json_encode($request->input('categories')) : json_encode("");
 
         $brand->save();
 
@@ -68,7 +69,7 @@ class BrandController extends Controller
     {
         $categories = Catagory::all();
         $brand = Brand::find($id);
-        return view('backend.admin.brand.view', compact('brand' , 'categories'));
+        return view('backend.admin.brand.view', compact('brand', 'categories'));
     }
     public function edit($id)
     {
@@ -184,5 +185,112 @@ class BrandController extends Controller
         }
 
         return redirect()->back()->withErrors(['Image Not Updated']);
+    }
+
+
+
+
+    public function showProduct($id)
+    {
+        $products = Product::where('brand_id', $id)->get();
+        $brand = Brand::find($id);
+        return view('backend.admin.brand.product-show', compact('products', 'id', 'brand'));
+    }
+
+
+
+
+    public function addProduct($id)
+    {
+        $catagories = [];
+        $brand = Brand::find($id);
+        $allowed_categories = json_decode($brand->allowed_categories);
+        foreach ($allowed_categories as $allowed_category) {
+            $category = Catagory::find($allowed_category);
+            $catagories[] = $category;
+        }
+        return view('backend.admin.brand.add-product', compact('brand', 'catagories'));
+    }
+
+    public function saveProduct(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:500',
+            'price' => 'required',
+            'quantity' => 'required',
+            'images' => 'required',
+            'color' => 'required|array',
+            'size' => 'required|array',
+            'catagory_id' => 'required',
+            'brand_id' => 'required',
+        ]);
+
+        $images = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $imageName = uniqid() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('backendAssets/images/products'), $imageName);
+                $images[] = 'backendAssets/images/products/' . $imageName;
+            }
+        }
+
+        // Save Product
+        Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'total_items' => $request->quantity,
+            'images' => json_encode($images),
+            'color' => json_encode($request->color), // Encode the array to JSON for database storage
+            'size' => json_encode($request->size),   // Encode the array to JSON for database storage
+            'catagory_id' => $request->catagory_id,
+            'brand_id' => $request->brand_id,
+        ]);
+
+        // Redirect with a success message
+        return redirect()->back()->with('success', 'Product added successfully!');
+    }
+
+    public function editProduct($id)
+    {
+        $product = User::find($id);
+
+        return view('backend.admin.brand.product-edit', compact('product'));
+    }
+    public function updateProduct(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+        ]);
+
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+        return redirect('admin/brand-product/' . $user->brand_id)->with('success', 'User updated successfully');
+    }
+    public function deleteProduct($id)
+    {
+        $product = Product::find($id);
+        $product->delete();
+        return redirect()->back()->with('success', 'product Deleted Successfully');
+    }
+
+    public function updateStatus($id, $status)
+    {
+        $product = Product::findOrFail($id);
+        $product->status = $status;
+        $product->save();
+
+        return redirect()->back()->with('success', 'Product status updated successfully.');
+    }
+
+    public function viewProduct($id){
+        $product = Product::find($id);
+        return view('backend.admin.brand.product-view', compact('product'));
     }
 }

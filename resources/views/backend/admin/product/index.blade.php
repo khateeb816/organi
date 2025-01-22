@@ -56,13 +56,16 @@
                             </span>
                         </td>
                         <td>
-                            <a href="{{ url('admin/product-view/' . $product->id) }}"
-                                class="btn btn-primary btn-sm">View</a>
-                            <a href="{{ url('admin/product-edit/' . $product->id) }}"
-                                class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{{ url('admin/product-view/' . $product->id) }}" class="btn btn-primary btn-sm">View</a>
+
+                            @if ($product->brand_id == Auth::user()->brand_id)
+                                <a href="{{ url('admin/product-edit/' . $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            @endif
+
                             <a href="{{ url('admin/product-delete/' . $product->id) }}" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                               onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
                         </td>
+
                     </tr>
                 @endforeach
             </tbody>

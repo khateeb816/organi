@@ -22,11 +22,8 @@ return new class extends Migration
             $table->string('color', 100)->nullable();
             $table->string('size', 50)->nullable();
             $table->unsignedBigInteger('catagory_id');
+            $table->integer('brand_id');
             $table->integer('sold_items')->default(0);
-
-            // Laravel does not directly support generated/stored columns. You can add this later manually in raw SQL.
-            // $table->integer('remaining_items')->storedAs('total_items - sold_items');
-
             $table->string('status' )->default('pending');
             $table->string('state')->nullable();
             $table->timestamps();
