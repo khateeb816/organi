@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Catagory;
+use App\Models\catagory;
 
-class CatagoryController extends Controller
+class catagoryController extends Controller
 {
     //
     public function index()
     {
-        $catagorys = Catagory::all();
+        $catagorys = catagory::all();
 
         return view('backend.admin.catagory.index', compact('catagorys'));
     }
@@ -33,7 +33,7 @@ class CatagoryController extends Controller
 
 
 
-        $catagory = new Catagory();
+        $catagory = new catagory();
         $catagory->name = $request->input('name');
         $catagory->description = $request->input('description');
 
@@ -44,14 +44,14 @@ class CatagoryController extends Controller
 
     public function delete($id)
     {
-        $catagory = Catagory::find($id);
+        $catagory = catagory::find($id);
         $catagory->delete();
         return redirect()->route('catagory.index')->with('success', 'catagory deleted successfully!');
     }
 
     public function edit($id)
     {
-        $catagory = Catagory::find($id);
+        $catagory = catagory::find($id);
         return view('backend.admin.catagory.edit', compact('catagory'));
     }
 
@@ -63,7 +63,7 @@ class CatagoryController extends Controller
             'description' => 'required|string|max:255',
 
         ]);
-        $catagory = Catagory::find($id);
+        $catagory = catagory::find($id);
 
         $catagory->name = $request->input('name');
         $catagory->description = $request->input('description');

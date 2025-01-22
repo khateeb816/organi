@@ -5,13 +5,13 @@
 <!-- Include Bootstrap 5 CSS -->
 
 <div class="content-body p-3 bg-light">
-    <a href="{{ url('admin/catagory-add') }}" class="btn btn-info">Add Catagory</a>
+    <a href="{{ url('admin/catagory-add') }}" class="btn btn-info">Add catagory</a>
     <table id="table" class="display w-100">
         <thead>
             <tr>
                 <th>Sno.</th>
-                <th>Catagory Name</th>
-                <th>Catagory Description</th>
+                <th>catagory Name</th>
+                <th>catagory Description</th>
                 <th>Action</th>
             </tr>
         </thead>

@@ -13,7 +13,7 @@
                             <form action="{{ url('admin/catagory-save') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="text" name="name" class="form-control input-default" placeholder="Enter Category Name" required>
+                                    <input type="text" name="name" class="form-control input-default" placeholder="Enter catagory Name" required>
                                     @error('name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -33,7 +33,7 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-dark mb-2">Add Catagory</button>
+                                    <button type="submit" class="btn btn-dark mb-2">Add catagory</button>
                                 </div>
                             </form>
                         </div>
