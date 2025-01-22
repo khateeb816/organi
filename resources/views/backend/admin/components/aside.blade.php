@@ -36,7 +36,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('/admin/products') }}" aria-expanded="false">
+                        <a href="{{ url('/admin/product') }}" aria-expanded="false">
                             <i class="icon-basket-loaded menu-icon"></i><span class="nav-text">Products</span>
                         </a>
                     </li>

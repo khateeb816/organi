@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\UserController;
-use App\Http\Controllers\backend\BrandController;
+use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CatagoryController;
+use App\Http\Controllers\Backend\ProductController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -99,4 +101,23 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::post('/member-update/{id}', [BrandController::class, 'updateMember'])->name('member.update');
 
     Route::get('/member-delete/{id}', [BrandController::class, 'deleteMember'])->name('member.delete');
+
+
+    //product page
+
+    Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+
+    Route::get('/product-add', [ProductController::class, 'add'])->name('product.add');
+
+    Route::post('/product-save', [ProductController::class, 'save'])->name('product.save');
+
+    Route::post('/product-update/{id}', [ProductController::class, 'update'])->name('product.update');
+
+    Route::get('/product-delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+
+    Route::get('/product-view/{id}', [ProductController::class, 'view'])->name('product.view');
+
+    Route::get('/product-edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+
+
 });

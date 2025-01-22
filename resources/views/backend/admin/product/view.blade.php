@@ -132,7 +132,7 @@
                     </select>
                 </div>
 
-                <a href="{{ url('admin/products') }}" class="btn btn-dark mt-3">Back to Products</a>
+                <a href="{{ url('admin/product') }}" class="btn btn-dark mt-3">Back to Products</a>
             </div>
         </div>
     </div>

@@ -58,7 +58,7 @@ class ProductController extends Controller
         ]);
 
         // Redirect with a success message
-        return redirect()->route('admin.product.add')->with('success', 'Product added successfully!');
+        return redirect()->back()->with('success', 'Product added successfully!');
     }
 
     public function delete($id)
