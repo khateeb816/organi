@@ -35,6 +35,11 @@
                             <i class="icon-badge menu-icon"></i><span class="nav-text">Brands</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ url('/admin/products') }}" aria-expanded="false">
+                            <i class="icon-basket-loaded menu-icon"></i><span class="nav-text">Products</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
