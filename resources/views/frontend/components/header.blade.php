@@ -118,22 +118,14 @@
                                 </ul>
                             </div>
                             <div class="header__top__right__auth">
-                                {{-- @if (Auth::check())
-                                    <a href="{{ url('/logout') }}"
-                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                       <i class="fa fa-user"></i> Logout
-                                    </a>
 
-                                @else
-                                    <a href="{{ url('/login') }}"><i class="fa fa-user"></i> Login</a>
-                                @endif --}}
                                 @if (Auth::check())
                                     <a href="#"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="fa fa-user"></i> Logout
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST"
                                         style="display: none;">
                                         @csrf
                                     </form>
