@@ -16,12 +16,12 @@ class CartController extends Controller
         return view('frontend.shop.shopingCart', compact('carts'));
     }
 
-    public function addToCart(Request $request)
+    public function addToCart($id , $quanity = 1)
     {
         Cart::create([
             'user_id' => auth()->user()->id,
-            'product_id' => $request->item_id,
-            'quantity' => $request->quantity,
+            'product_id' => $id,
+            'quantity' => $quanity,
         ]);
         return redirect()->back();
     }

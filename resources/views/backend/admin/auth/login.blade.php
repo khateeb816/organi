@@ -9,7 +9,7 @@
                             <div class="card-body pt-5">
                                 <a class="text-center" href="index.html"> <h4>Login</h4></a>
 
-                                <form class="mt-5 mb-5 login-input" action="{{url('/login-check')}}" method="post">
+                                <form class="mt-5 mb-5 login-input" action="{{url('admin/login-check')}}" method="post">
                                     @csrf
                                     <div class="form-group">
                                         <input type="email" class="form-control" name="email" placeholder="Email">

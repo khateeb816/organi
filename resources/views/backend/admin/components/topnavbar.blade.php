@@ -181,7 +181,7 @@
 
                                         <hr class="my-2">
 
-                                        <li><a href="{{ url('/logout') }}" style="text-decoration: none; color:black;"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                        <li><a href="{{ url('admin/logout') }}" style="text-decoration: none; color:black;"><i class="icon-key"></i> <span>Logout</span></a></li>
                                     </ul>
                                 </div>
                             </div>
