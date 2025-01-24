@@ -41,9 +41,6 @@ class HomeController extends Controller
         return view('frontend.contact.index');
     }
 
-    public function test(){
-        $products = Product::all();
-        return view('frontend.shop.test' , compact('products'));
-    }
+    
 
 }
