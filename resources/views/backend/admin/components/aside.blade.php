@@ -40,6 +40,11 @@
                             <i class="icon-basket-loaded menu-icon"></i><span class="nav-text">Products</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ url('/admin/coupon') }}" aria-expanded="false">
+                            <i class="icon-tag menu-icon"></i><span class="nav-text">Coupons</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
