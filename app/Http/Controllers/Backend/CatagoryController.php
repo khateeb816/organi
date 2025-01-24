@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\catagory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class catagoryController extends Controller
 {
+    use HasFactory;
     //
     public function index()
     {

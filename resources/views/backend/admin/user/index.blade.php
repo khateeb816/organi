@@ -11,6 +11,7 @@
             <tr>
                 <th>Sno.</th>
                 <th>Name</th>
+                <th>Email</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -19,6 +20,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $user->name }}</td>
+                    <td>{{ $user->email }}</td>
                     <td>
                         <a href="{{ url('admin/user-edit/' . $user->id) }}" class="btn btn-success">Edit</a>
                         <a href="{{ url('admin/user-delete/' . $user->id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this User?');">Delete</a>

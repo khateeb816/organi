@@ -11,11 +11,11 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::where('role', 'user')->get();
+        $users = User::where('role', 'customer')->get();
 
         return view('backend.admin.user.index', compact('users'));
     }
-    
+
     public function add()
     {
         return view('backend.admin.user.add');
