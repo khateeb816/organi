@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -18,10 +19,6 @@ class HomeController extends Controller
 
     public function shopDetails(){
         return view('frontend.shop.shopDetails');
-    }
-
-    public function shopingCart(){
-        return view('frontend.shop.shopingCart');
     }
 
 
@@ -42,6 +39,11 @@ class HomeController extends Controller
 
     public function contact(){
         return view('frontend.contact.index');
+    }
+
+    public function test(){
+        $products = Product::all();
+        return view('frontend.shop.test' , compact('products'));
     }
 
 }
