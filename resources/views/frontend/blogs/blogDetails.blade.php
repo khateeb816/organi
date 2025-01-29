@@ -1,62 +1,10 @@
     <!-- Header Section Begin -->
-    @include("frontend.components.header")
+    @include('frontend.components.header')
     <!-- Header Section End -->
 
-    <!-- Hero Section Begin -->
-    <section class="hero hero-normal">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All departments</span>
-                        </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
-                                <span>support 24/7 time</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Hero Section End -->
-
     <!-- Blog Details Hero Begin -->
-    <section class="blog-details-hero set-bg" data-setbg="{{ asset('frontendAssets/img/blog/details/details-hero.jpg') }}">
+    <section class="blog-details-hero set-bg"
+        data-setbg="{{ asset('frontendAssets/img/blog/details/details-hero.jpg') }}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -143,7 +91,7 @@
                 </div>
                 <div class="col-lg-8 col-md-7 order-md-1 order-1">
                     <div class="blog__details__text">
-                        <img src="{{ asset('frontendAssets/img/blog/details/details-pic.jpg')}}" alt="">
+                        <img src="{{ asset('frontendAssets/img/blog/details/details-pic.jpg') }}" alt="">
                         <p>Sed porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet
                             dui. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Mauris blandit
                             aliquet elit, eget tincidunt nibh pulvinar a. Vivamus magna justo, lacinia eget consectetur
@@ -164,7 +112,8 @@
                             <div class="col-lg-6">
                                 <div class="blog__details__author">
                                     <div class="blog__details__author__pic">
-                                        <img src="{{ asset('frontendAssets/img/blog/details/details-author.jpg')}}" alt="">
+                                        <img src="{{ asset('frontendAssets/img/blog/details/details-author.jpg') }}"
+                                            alt="">
                                     </div>
                                     <div class="blog__details__author__text">
                                         <h6>Michael Scofield</h6>
@@ -209,7 +158,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="blog__item">
                         <div class="blog__item__pic">
-                            <img src="{{ asset('frontendAssets/img/blog/blog-1.jpg')}}" alt="">
+                            <img src="{{ asset('frontendAssets/img/blog/blog-1.jpg') }}" alt="">
                         </div>
                         <div class="blog__item__text">
                             <ul>
@@ -224,7 +173,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="blog__item">
                         <div class="blog__item__pic">
-                            <img src="{{ asset('frontendAssets/img/blog/blog-2.jpg')}}" alt="">
+                            <img src="{{ asset('frontendAssets/img/blog/blog-2.jpg') }}" alt="">
                         </div>
                         <div class="blog__item__text">
                             <ul>
@@ -239,7 +188,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-6">
                     <div class="blog__item">
                         <div class="blog__item__pic">
-                            <img src="{{ asset('frontendAssets/img/blog/blog-3.jpg')}}" alt="">
+                            <img src="{{ asset('frontendAssets/img/blog/blog-3.jpg') }}" alt="">
                         </div>
                         <div class="blog__item__text">
                             <ul>
@@ -257,5 +206,5 @@
     <!-- Related Blog Section End -->
 
 
-   <!-- Footer Section Begin -->
-   @include("frontend.components.footer")
+    <!-- Footer Section Begin -->
+    @include('frontend.components.footer')

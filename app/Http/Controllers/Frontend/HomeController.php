@@ -13,7 +13,6 @@ class HomeController extends Controller
     //
     public function home()
     {
-        $categories = Catagory::all();
         $brands = Brand::all();
         $featured = Product::where('state', 'featured')
         ->where('status', 'active')
@@ -36,7 +35,7 @@ class HomeController extends Controller
             ->take(6)
             ->get();
 
-        return view('frontend.home.index', compact('categories', 'brands', 'featured', 'top_rated', 'latest' , 'reviews'));
+        return view('frontend.home.index', compact( 'brands', 'featured', 'top_rated', 'latest' , 'reviews'));
     }
 
 

@@ -8,7 +8,7 @@
     <a href="{{ url('admin/product-add') }}" class="btn btn-info mb-3">Add Product</a>
     <div class="table-responsive">
         <table id="table" class="display table table-striped table-bordered w-100">
-            <thead>
+            <thead> 
                 <tr>
                     <th>Sno.</th>
                     <th>Product Name</th>

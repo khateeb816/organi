@@ -4,7 +4,7 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="footer__about">
                     <div class="footer__about__logo">
-                        <a href="./index.html"><img src="{{ asset('frontendAssets/img/logo.png')}}" alt=""></a>
+                        <a href="./index.html"><img src="{{ asset('frontendAssets/img/logo.png') }}" alt=""></a>
                     </div>
                     <ul>
                         <li>Address: 60-49 Road 11378 New York</li>
@@ -54,25 +54,47 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="footer__copyright">
-                    <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                    <div class="footer__copyright__payment"><img src="{{ asset('frontendAssets/img/payment-item.png')}}" alt=""></div>
+                    <div class="footer__copyright__text">
+                        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script> All rights reserved | This template is made with <i
+                                class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                    <div class="footer__copyright__payment"><img
+                            src="{{ asset('frontendAssets/img/payment-item.png') }}" alt=""></div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
-<script src="{{ asset('frontendAssets/js/jquery-3.3.1.min.js')}}"></script>
-    <script src="{{ asset('frontendAssets/js/bootstrap.min.js')}}"></script>
-    <script src="{{ asset('frontendAssets/js/jquery.nice-select.min.js')}}"></script>
-    <script src="{{ asset('frontendAssets/js/jquery-ui.min.js')}}"></script>
-    <script src="{{ asset('frontendAssets/js/jquery.slicknav.js')}}"></script>
-    <script src="{{ asset('frontendAssets/js/mixitup.min.js')}}"></script>
-    <script src="{{ asset('frontendAssets/js/owl.carousel.min.js')}}"></script>
-    <script src="{{ asset('frontendAssets/js/main.js')}}"></script>
+<script src="{{ asset('frontendAssets/js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('frontendAssets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('frontendAssets/js/jquery.nice-select.min.js') }}"></script>
+<script src="{{ asset('frontendAssets/js/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('frontendAssets/js/jquery.slicknav.js') }}"></script>
+<script src="{{ asset('frontendAssets/js/mixitup.min.js') }}"></script>
+<script src="{{ asset('frontendAssets/js/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('frontendAssets/js/main.js') }}"></script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const categoryToggle = document.getElementById('category-toggle');
+        const categoryList = document.querySelector('.category-dropdown');
 
+        categoryToggle.addEventListener('click', function() {
+            if (categoryList.style.display === 'none' || categoryList.style.display === '') {
+                categoryList.style.display = 'block';
+            } else {
+                categoryList.style.display = 'none'; 
+            }
+        });
+    });
+</script>
 
 </body>
 
