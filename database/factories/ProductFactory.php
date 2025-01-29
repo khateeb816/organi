@@ -16,7 +16,7 @@ class ProductFactory extends Factory
             'description' => $this->faker->sentence,
             'price' => $this->faker->numberBetween(50, 500),
             'total_items' => $this->faker->numberBetween(1, 100),
-            'images' => json_encode([$this->faker->imageUrl()]),
+            'images' => '["backendAssets\/images\/products\/6799f5aac7a59_pexels-madebymath-90946.jpg"]',
             'color' => json_encode([$this->faker->safeColorName]),
             'size' => json_encode([$this->faker->randomElement(['S', 'M', 'L', 'XL'])]),
             'catagory_id' => $this->faker->numberBetween(1, 10),

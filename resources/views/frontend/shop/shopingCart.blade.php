@@ -96,9 +96,13 @@
                                   $discount = 0;
                               @endphp
                               @foreach ($carts as $cart)
+                                  @php
+                                      $images = (array) json_decode($cart->product->images);
+                                      $firstImage = $images[0];
+                                  @endphp
                                   <tr>
                                       <td class="shoping__cart__item">
-                                          <img src="{{ asset($cart->product->image) }}">
+                                          <img src="{{ asset($firstImage) }}" width="100">
                                           <h5>{{ $cart->product->name }}</h5>
                                       </td>
                                       <td class="shoping__cart__price">
@@ -168,70 +172,72 @@
   <!-- Shoping Cart Section End -->
 
   <script>
-      document.addEventListener("DOMContentLoaded", function () {
-    const editCartBtn = document.getElementById("edit-cart-btn");
-    const quantityInputs = document.querySelectorAll(".shoping__cart__quantity input");
+      document.addEventListener("DOMContentLoaded", function() {
+          const editCartBtn = document.getElementById("edit-cart-btn");
+          const quantityInputs = document.querySelectorAll(".shoping__cart__quantity input");
 
-    let isEditing = false;
+          let isEditing = false;
 
-    editCartBtn.addEventListener("click", function () {
-        isEditing = !isEditing;
+          editCartBtn.addEventListener("click", function() {
+              isEditing = !isEditing;
 
-        if (isEditing) {
-            // Enable all quantity inputs
-            quantityInputs.forEach(input => {
-                input.disabled = false;
-            });
-            // Change button text to "Save Cart"
-            editCartBtn.textContent = "Save Cart";
-            editCartBtn.classList.add("save-btn");
-        } else {
-            // Collect updated data
-            let updatedCart = [];
-            quantityInputs.forEach(input => {
-                const cartId = input.dataset.cartId; // Get the cart_id from data attribute
-                const quantity = input.value;
-                updatedCart.push({
-                    cart_id: cartId,
-                    quantity: quantity
-                });
-            });
+              if (isEditing) {
+                  // Enable all quantity inputs
+                  quantityInputs.forEach(input => {
+                      input.disabled = false;
+                  });
+                  // Change button text to "Save Cart"
+                  editCartBtn.textContent = "Save Cart";
+                  editCartBtn.classList.add("save-btn");
+              } else {
+                  // Collect updated data
+                  let updatedCart = [];
+                  quantityInputs.forEach(input => {
+                      const cartId = input.dataset.cartId; // Get the cart_id from data attribute
+                      const quantity = input.value;
+                      updatedCart.push({
+                          cart_id: cartId,
+                          quantity: quantity
+                      });
+                  });
 
-            // Debug log updated cart data
-            console.log(updatedCart);
+                  // Debug log updated cart data
+                  console.log(updatedCart);
 
-            // Optional: Send AJAX request to save cart data
-            fetch("/update-cart", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
-                },
-                body: JSON.stringify({ cart: updatedCart })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log("Cart updated successfully!");
-                    } else {
-                        console.log("Failed to update cart!");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error updating cart:", error);
-                });
+                  // Optional: Send AJAX request to save cart data
+                  fetch("/update-cart", {
+                          method: "POST",
+                          headers: {
+                              "Content-Type": "application/json",
+                              "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')
+                                  .getAttribute("content")
+                          },
+                          body: JSON.stringify({
+                              cart: updatedCart
+                          })
+                      })
+                      .then(response => response.json())
+                      .then(data => {
+                          if (data.success) {
+                              console.log("Cart updated successfully!");
+                          } else {
+                              console.log("Failed to update cart!");
+                          }
+                      })
+                      .catch(error => {
+                          console.error("Error updating cart:", error);
+                      });
 
-            // Disable all quantity inputs
-            quantityInputs.forEach(input => {
-                input.disabled = true;
-            });
-            // Change button text back to "Edit Cart"
-            editCartBtn.textContent = "Edit Cart";
-            editCartBtn.classList.remove("save-btn");
-        }
-    });
-});
-
+                  // Disable all quantity inputs
+                  quantityInputs.forEach(input => {
+                      input.disabled = true;
+                  });
+                  // Change button text back to "Edit Cart"
+                  editCartBtn.textContent = "Edit Cart";
+                  editCartBtn.classList.remove("save-btn");
+              }
+          });
+      });
   </script>
 
 
