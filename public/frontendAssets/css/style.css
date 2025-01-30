@@ -3593,3 +3593,67 @@ ol {
         font-size: 24px;
     }
 }
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    /* Center the pagination */
+    padding: 10px 0;
+    list-style: none;
+    /* Remove bullets */
+    gap: 0.5rem;
+    /* Add spacing between items */
+}
+
+.pagination .page-item {
+    border: 1px solid #dee2e6;
+    /* Light border */
+    border-radius: 5px;
+    /* Rounded corners */
+    overflow: hidden;
+}
+
+.pagination .page-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    color: #007bff;
+    /* Primary color */
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: #fff;
+    /* White background */
+    border: none;
+    /* Remove default border */
+}
+
+.pagination .page-link:hover {
+    background-color: #f1f1f1;
+    /* Light hover background */
+    color: #0056b3;
+    /* Darker primary hover */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    /* Active background color */
+    color: white;
+    /* White text for active link */
+    border-color: #007bff;
+    /* Match the border color */
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    /* Disabled color */
+    background-color: #e9ecef;
+    /* Light gray background */
+    pointer-events: none;
+    /* Disable click */
+}
+
+.pagination .page-item:first-child .page-link,
+.pagination .page-item:last-child .page-link {
+    border-radius: 5px;
+    /* Rounded corners for first and last items */
+}

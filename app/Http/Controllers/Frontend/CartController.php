@@ -16,7 +16,7 @@ class CartController extends Controller
         return view('frontend.shop.shopingCart', compact('carts'));
     }
 
-    public function addToCart($id , $quanity = 1)
+    public function addToCart($id, $quanity = 1)
     {
         Cart::create([
             'user_id' => auth()->user()->id,
