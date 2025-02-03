@@ -26,6 +26,7 @@ class ReviewController extends Controller
             'review' => $request->review,
             'created_at' => now(),
         ]);
+        
 
         return redirect()->back()->with('success', 'Your review has been submitted successfully!');
     }

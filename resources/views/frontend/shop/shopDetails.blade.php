@@ -50,12 +50,14 @@
             <div class="col-lg-6 col-md-6">
                 <div class="product__details__text">
                     <h3>{{ $product->name }}</h3>
-                    <div class="product__details__rating">
-                        @for ($i = 1; $i <= 5; $i++)
-                            <i class="fa {{ $i <= round($product->rating) ? 'fa-star' : 'fa-star-o' }}"></i>
-                        @endfor
-                        <span>({{ $product->reviews_count }} reviews)</span>
+                    <div class="product__details__rating d-flex align-items-center">
+                        <div class="rating-stars">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <i class="fa fa-star {{ $i <= $averageRating ? 'checked' : '' }}"></i>
+                            @endfor
+                        </div>
                     </div>
+
                     <div class="product__details__price">${{ number_format($product->price, 2) }}</div>
                     <p>{{ $product->description }}</p>
                     <form action="{{ url('add-to-cart-quanitity') }}" method="post">
