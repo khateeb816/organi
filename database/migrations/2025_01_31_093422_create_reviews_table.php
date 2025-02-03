@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('user_id');
             $table->string('product_id');
             $table->integer('rating');
-            $table->text('review');
+            $table->text('review')->nullable();
             $table->timestamps();
         });
     }

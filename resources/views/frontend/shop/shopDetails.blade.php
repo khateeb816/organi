@@ -144,7 +144,7 @@
                         <!-- Review Text -->
                         <div class="form-group">
                             <label for="review">Your Review:</label>
-                            <textarea name="review" class="form-control" rows="4" required></textarea>
+                            <textarea name="review" class="form-control" rows="4" ></textarea>
                         </div>
 
                         <button type="submit" class="primary-btn">Submit Review</button>
