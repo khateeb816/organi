@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
+use App\Models\Review;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -15,8 +17,14 @@ class ProductController extends Controller
             ->where('id', '!=', $product->id)
             ->take(4)
             ->get();
+        $reviewed = false;
 
-        return view('frontend.shop.shopDetails', compact('product', 'relatedProducts'));
+        if (Review::where('user_id', Auth::id())->where('product_id', $id)->first()) {
+            $reviewed = true;
+        }
+        $reviews = Review::where('product_id', $id)->with('user')->take(8)->get();
+
+        return view('frontend.shop.shopDetails', compact('product', 'relatedProducts', 'reviewed', 'reviews'));
     }
 
     public function searchItem(Request $request)

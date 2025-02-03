@@ -3657,3 +3657,33 @@ ol {
     border-radius: 5px;
     /* Rounded corners for first and last items */
 }
+
+
+
+
+
+/* custom css */
+.checked {
+    color: orange;
+}
+.star-rating {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.customer-review{
+    
+}
+
+
+.customer-name{
+
+}
+
+.customer-rating{
+
+}
+
+.customer-reviewed{
+
+}
