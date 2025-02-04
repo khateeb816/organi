@@ -12,7 +12,7 @@ class Payment extends Model
 
     // Define the fillable attributes to prevent mass assignment vulnerabilities
     protected $fillable = [
-        'order_id',
+        'user_id',
         'card_name',
         'card_number',
         'card_expiry',

@@ -91,13 +91,6 @@ class HomeController extends Controller
         return view('frontend.shop.shopDetails');
     }
 
-
-    public function checkout()
-    {
-        return view('frontend.checkout.index');
-    }
-
-
     public function blogDetails()
     {
         return view('frontend.blogs.blogDetails');

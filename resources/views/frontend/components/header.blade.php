@@ -40,24 +40,35 @@
         </div>
         <div class="humberger__menu__cart">
             <ul>
-                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-                <li><a {{url('/shopingCart')}}"><i class="bi bi-cart"></i></a></li>
+                <li>
+                    <a href="{{ url('wishlist') }}">
+                        <i class="fa fa-heart"></i>
+                        @auth
+                        <span>{{ \App\Models\Wishlist::where('user_id', Auth::id())->count() }}</span>
+                        @endauth
+                    </a>
+                </li>
+                <li>
+                    <a href="/shopingCart">
+                        <i class="fa fa-shopping-bag"></i>
+                        @auth
+                        <span>{{ \App\Models\Cart::where('user_id', Auth::id())->count() }}</span>
+                        @endauth
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="humberger__menu__widget">
             <div class="header__top__right__language">
                 <img src="img/language.png" alt="">
-                <div>English</div>
-                <span class="arrow_carrot-down"></span>
                 @if (Auth::check())
                 <img src="img/language.png" alt="">
                 <div>{{ Auth::user()->name }}</div>
                 <span class="arrow_carrot-down"></span>
                 <ul>
                     <li><a href="#"><i class="fa fa-user"></i>&nbsp; Profile</a></li>
-                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-list-ul" viewBox="0 0 16 16">
+                    <li><a href="{{ url('/orders') }}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
                             </svg>&nbsp; My
@@ -100,12 +111,6 @@
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
-        <div class="header__top__right__social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-pinterest-p"></i></a>
-        </div>
         <div class="humberger__menu__contact">
             <ul>
                 <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
@@ -130,12 +135,6 @@
                     </div>
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
-                            <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                            </div>
                             <div class="header__top__right__language">
                                 @if (Auth::check())
                                 <img src="img/language.png" alt="">
@@ -143,8 +142,9 @@
                                 <span class="arrow_carrot-down"></span>
                                 <ul>
                                     <li><a href="#"><i class="fa fa-user"></i>&nbsp; Profile</a></li>
-                                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
+                                    <li><a href="{{ url('orders') }}"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                height="16" fill="currentColor" class="bi bi-list-ul"
+                                                viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd"
                                                     d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
                                             </svg>&nbsp; My
