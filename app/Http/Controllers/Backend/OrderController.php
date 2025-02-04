@@ -50,9 +50,9 @@ class OrderController extends Controller
             ]);
         };
 
-        $profile = Profile::where('user_id', Auth::id())->first();
-        if ($profile) {
-            $profile::update([
+        Profile::updateOrCreate(
+            ['user_id' => Auth::id()],  // Condition: Agar yeh mil jaye toh update ho, warna naya insert ho
+            [
                 'name' => $request->name,
                 'country' => $request->country,
                 'address' => $request->address,
@@ -60,22 +60,8 @@ class OrderController extends Controller
                 'state' => $request->state,
                 'postcode' => $request->postcode,
                 'phone' => $request->phone,
-                'user_id' => Auth::id(),
-            ]);
-        } else {
-            Profile::insert([
-                'name' => $request->name,
-                'country' => $request->country,
-                'address' => $request->address,
-                'city' => $request->city,
-                'state' => $request->state,
-                'postcode' => $request->postcode,
-                'phone' => $request->phone,
-                'user_id' => Auth::id(),
-            ]);
-        }
-
-
+            ]
+        );
         // dd($order);
 
         $cart = Cart::where('user_id', Auth::id())->delete();

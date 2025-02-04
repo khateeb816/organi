@@ -181,7 +181,7 @@
                                                 class="fa fa-heart"></i></a></li>
                                     <li><a href="{{ url('/product-details/' . $product->id) }}"><i
                                                 class="fa fa-retweet"></i></a></li>
-                                    <li><a href="{{ url('/add-to-cart/' . $product->id) }}"><i
+                                    <li><a href="{{ url('/add-to-cart/' . $product->id) . '/1'}}"><i
                                                 class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
