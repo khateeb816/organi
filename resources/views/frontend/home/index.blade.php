@@ -54,7 +54,7 @@
                             </ul>
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="#">{{ $item->name }}</a></h6>
+                            <h6><a href="{{ url('product-details/' . $item->id) }}">{{ $item->name }}</a></h6>
                             <h5>${{ $item->price }}</h5>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                                     $images = (array) json_decode($item->images);
                                     $firstImage = $images[0];
                                 @endphp
-                                <a href="#" class="latest-product__item">
+                                <a href="{{ url('product-details/' . $item->id) }}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="{{ asset($firstImage) }}" alt="">
                                     </div>
@@ -128,7 +128,7 @@
                                     $images = (array) json_decode($item->images);
                                     $firstImage = $images[0];
                                 @endphp
-                                <a href="#" class="latest-product__item">
+                                <a href="{{ url('product-details/' . $item->id) }}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="{{ asset($firstImage) }}" alt="">
                                     </div>
@@ -156,7 +156,7 @@
                                     $images = (array) json_decode($item->images);
                                     $firstImage = $images[0];
                                 @endphp
-                                <a href="#" class="latest-product__item">
+                                <a href="{{ url('product-details/' . $item->id) }}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="{{ asset($firstImage) }}" alt="">
                                     </div>
@@ -173,7 +173,7 @@
                                     $images = (array) json_decode($item->images);
                                     $firstImage = $images[0];
                                 @endphp
-                                <a href="#" class="latest-product__item">
+                                <a href="{{ url('product-details/' . $item->id) }}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="{{ asset($firstImage) }}" alt="">
                                     </div>
@@ -202,7 +202,7 @@
                                     $firstImage = $images[0];
                                 @endphp
 
-                                <a href="#" class="latest-product__item">
+                                <a href="{{ url('product-details/' . $item->id) }}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="{{ asset($firstImage) }}" alt="">
                                     </div>
@@ -220,7 +220,7 @@
                                     $firstImage = $images[0];
                                 @endphp
 
-                                <a href="#" class="latest-product__item">
+                                <a href="{{ url('product-details/' . $item->id) }}" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="{{ asset($firstImage) }}" alt="">
                                     </div>
