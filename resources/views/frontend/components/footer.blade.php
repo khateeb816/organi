@@ -90,11 +90,13 @@
             if (categoryList.style.display === 'none' || categoryList.style.display === '') {
                 categoryList.style.display = 'block';
             } else {
-                categoryList.style.display = 'none'; 
+                categoryList.style.display = 'none';
             }
         });
     });
 </script>
+
+
 
 </body>
 

@@ -45,9 +45,11 @@
                             <i class="icon-tag menu-icon"></i><span class="nav-text">Coupons</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ url('/admin/orders') }}" aria-expanded="false">
+                            <i class="icon-basket menu-icon"></i><span class="nav-text">Orders</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
-        <!--**********************************
-            Sidebar end
-        ***********************************-->

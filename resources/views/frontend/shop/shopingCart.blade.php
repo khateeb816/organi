@@ -111,7 +111,8 @@
                           <li>Subtotal <span>${{ $subtotal }}.00</span></li>
                           <li>Total <span>${{ $subtotal - $discount }}.00</span></li>
                       </ul>
-                      <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+
+                        <a href="{{url('checkout')}}" class="primary-btn">PROCEED TO CHECKOUT</a>
                   </div>
               </div>
           </div>

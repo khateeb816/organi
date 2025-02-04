@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Frontend;
-
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
@@ -10,21 +9,40 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
 
+
     public function shopingCart()
     {
-        $carts = Cart::where('user_id', auth()->user()->id)->with('product')->get();
+        $carts = Cart::where('user_id', auth()->id())->with('product')->get();
         return view('frontend.shop.shopingCart', compact('carts'));
     }
 
-    public function addToCart($id , $quanity = 1)
+    public function addToCart($id, $quantity = 1)
     {
-        Cart::create([
-            'user_id' => auth()->user()->id,
-            'product_id' => $id,
-            'quantity' => $quanity,
-        ]);
-        return redirect()->back();
+        // User login check
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Please login to add items to cart.');
+        }
+
+        // Check if product already exists in cart
+        $existingCart = Cart::where('user_id', auth()->id())
+            ->where('product_id', $id)
+            ->first();
+
+        if ($existingCart) {
+            // If product exists, update quantity
+            $existingCart->increment('quantity', $quantity);
+        } else {
+            // If product doesn't exist, create a new entry
+            Cart::create([
+                'user_id' => auth()->id(),
+                'product_id' => $id,
+                'quantity' => $quantity,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
+
 
     public function removeCartItem($id)
     {

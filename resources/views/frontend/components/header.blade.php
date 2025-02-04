@@ -13,6 +13,8 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="{{ asset('frontendAssets/css/bootstrap.min.css') }}" type="text/css">
@@ -23,6 +25,7 @@
     <link rel="stylesheet" href="{{ asset('frontendAssets/css/owl.carousel.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('frontendAssets/css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('frontendAssets/css/style.css') }}" type="text/css">
+
 
 </head>
 
@@ -39,6 +42,7 @@
             <ul>
                 <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
                 <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                <li><a {{url('/shopingCart')}}"><i class="bi bi-cart"></i></a></li>
             </ul>
             <div class="header__cart__price">item: <span>$150.00</span></div>
         </div>
@@ -182,8 +186,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="{{ url('/') }}"><img src="{{ asset('frontendAssets/img/logo.png') }}"
-                                alt=""></a>
+                        <a href="{{ url('/') }}"><img src="{{ asset('frontendAssets/img/logo.png') }}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -194,7 +197,7 @@
                             <li><a href="#">Pages</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="{{ url('/shopDetails') }}">Shop Details</a></li>
-                                    <li><a href="{{ url('/shopingCart') }}">Shoping Cart</a></li>
+                                    <li><a href="{{ url('/shopingCart') }}">Shopping Cart</a></li>
                                     <li><a href="{{ url('/checkout') }}">Check Out</a></li>
                                     <li><a href="{{ url('/blogDetails') }}">Blog Details</a></li>
                                 </ul>
@@ -208,8 +211,7 @@
                     <div class="header__cart">
                         <ul>
                             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-                        </ul>
+                            <li><a href="{{ url('/shopingCart') }}"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>                        </ul>
                         <div class="header__cart__price">item: <span>$150.00</span></div>
                     </div>
                 </div>
@@ -218,6 +220,7 @@
                 <i class="fa fa-bars"></i>
             </div>
         </div>
+
     </header>
     <!-- Header Section End -->
 
