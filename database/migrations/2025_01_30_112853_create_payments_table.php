@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('card_name');
             $table->string('card_number');
             $table->string('card_expiry');

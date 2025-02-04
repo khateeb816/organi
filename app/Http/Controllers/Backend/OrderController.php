@@ -3,55 +3,54 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Order;
 use App\Models\Cart;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
 use App\Models\OrderDetail;
-use App\Models\Product;
 use App\Models\Payment;
+use App\Models\Product;
 use App\Models\Profile;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class OrderController extends Controller
 {
     public function saveorderdetails(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Please login to proceed.');
-        }
-
         $request->validate([
-            'discount'  => 'nullable|numeric|min:0',
-            'total'     => 'required|numeric|min:1',
-            'name'      => 'required|string|max:255',
-            'country'   => 'required|string|max:255',
-            'address'   => 'required|string|max:500',
-            'city'      => 'required|string|max:100',
-            'state'     => 'required|string|max:100',
-            'postcode'  => 'required|numeric|digits_between:4,10',
-            'phone'     => 'required|numeric|digits_between:10,15',
+            'discount'  => 'nullable',
+            'total'     => 'required',
+            'name'      => 'required',
+            'country'   => 'required',
+            'address'   => 'required',
+            'city'      => 'required',
+            'state'     => 'required',
+            'postcode'  => 'required',
+            'phone'     => 'required',
         ]);
 
-        // New Order Create Karna
-
-        $order = Order::insertGetid([
+        // Create a new order
+        $orderId = Order::insertGetId([
             'user_id' => Auth::id(),
             'discount' => $request->discount,
             'total' => $request->total,
             'status' => 'pending',
+            'created_at' => now(),
         ]);
 
         $carts = Cart::where('user_id', Auth::id())->get();
         foreach ($carts as $cart) {
-            OrderDetail::insert([
-                'order_id' => $order,
+            OrderDetail::create([
+                'order_id' => $orderId,
                 'product_id' => $cart->product_id,
                 'quantity' => $cart->quantity,
+                'created_at' => now(),
             ]);
-        };
+        }
 
         Profile::updateOrCreate(
-            ['user_id' => Auth::id()],  // Condition: Agar yeh mil jaye toh update ho, warna naya insert ho
+            ['user_id' => Auth::id()],
             [
                 'name' => $request->name,
                 'country' => $request->country,
@@ -60,21 +59,23 @@ class OrderController extends Controller
                 'state' => $request->state,
                 'postcode' => $request->postcode,
                 'phone' => $request->phone,
+                'created_at' => now(),
             ]
         );
-        // dd($order);
 
-        $cart = Cart::where('user_id', Auth::id())->delete();
+        Cart::where('user_id', Auth::id())->delete();
 
-
-        return redirect('/paymentform/' . $order)->with('success', 'Order placed successfully!');
+        return redirect('/paymentform/' . $orderId)->with('success', 'Order placed successfully!');
     }
+
 
     public function showpaymentform($id)
     {
         $order = Order::find($id);
-        return view('frontend.checkout.payment', compact('order'));
+        $payment = Payment::where('user_id', Auth::id())->first();
+        return view('frontend.checkout.payment', compact('payment', 'order'));
     }
+
 
     public function checkoutForm()
     {
@@ -85,7 +86,6 @@ class OrderController extends Controller
     public function savePayment(Request $request)
     {
         $request->validate([
-            'order_id'    => 'required|exists:orders,id',
             'card_name'   => 'required|string|max:255',
             'card_number' => 'required|numeric', // Removed digits limit
             'card_expiry' => 'required|string', // Updated regex delimiter
@@ -93,62 +93,53 @@ class OrderController extends Controller
         ]);
 
         // Save payment details
-        Payment::create([
-            'order_id'    => $request->order_id,
-            'card_name'   => $request->card_name,
-            'card_number' => ($request->card_number), // Encrypt card details
-            'card_expiry' => $request->card_expiry,
-            'card_cvv'    => ($request->card_cvv),
-        ]);
+        Payment::updateOrCreate(
+            ['user_id' => Auth::id()],
+            [
+                'card_name'   => $request->card_name,
+                'card_number' => ($request->card_number),
+                'card_expiry' => $request->card_expiry,
+                'card_cvv'    => ($request->card_cvv),
+                'created_at'  => now(),
+            ]
+        );
 
-        return redirect()->back()->with('success', 'Payment completed successfully!');
+
+
+        return redirect('/order-recipt/' . $request->order_id)->with('success', 'Payment completed successfully!');
     }
-
-    // public function saveprofiledetails (Request $request)
-    // {
-
-    //     $request->validate([
-    //         'name' => 'required',
-    //         'country' => 'required',
-    //         'address' => 'required',
-    //         'city' => 'required',
-    //         'state' => 'required',
-    //         'postcode' => 'required',
-    //         'phone' => 'required',
-    //     ]);
-
-    //     Profile::insert([
-    //         'name' => $request->,
-    //         'country' => $request->,
-    //         'address' => $request->,
-    //         'city' => $request->,
-    //         'state' => $request->,
-    //         'postcode' => $request->,
-    //         'phone' => $request->,
-    //     ]);
-
-
-    // }
 
     public function showorders()
     {
         $orders = Order::with('product', 'payment')->get();
         return view('backend.admin.order.index', compact('orders'));
     }
+    public function showcancellations()
+    {
+        $orders = Order::with('product', 'payment')->where('status', 'Cancel Request')->get();
+        return view('backend.admin.order.cancellations',  compact('orders'));
+    }
 
     public function showorderdetails($id)
     {
 
-        $order = Order::with(['orderdetails.product' , 'user', 'payment'])
-        ->find($id);
+        $order = Order::with(['orderdetails.product', 'user', 'payment'])
+            ->find($id);
         return view('backend.admin.order.view', compact('order'));
     }
-    public function updateorderstatus(Request $request,$id)
+    public function updateorderstatus(Request $request, $id)
     {
-        $order=Order::find($id);
-        $order->status=$request->status;
+        $order = Order::find($id);
+        $order->status = $request->status;
         $order->save();
 
-    return redirect()->back()->with('success', 'Order status updated successfully.');
+        return redirect()->back()->with('success', 'Order status updated successfully.');
+    }
+
+    public function showOrderRecipt($id)
+    {
+        $order = Order::with(['orderdetails.product', 'user', 'payment'])
+            ->find($id);
+        return view('frontend.checkout.recipt', compact('order'));
     }
 }

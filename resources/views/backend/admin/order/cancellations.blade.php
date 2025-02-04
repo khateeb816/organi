@@ -3,8 +3,9 @@
 @include('backend.admin.components.aside')
 
 <div class="content-body p-3 bg-light">
+    <a href="{{ url('admin/orders') }}" class="btn btn-info mb-3">Back to Orders</a>
     <div class="table-responsive">
-        <h2>Orders:</h2>
+        <h2>Cancellations:</h2>
         <table id="table" class="display table table-striped table-bordered w-100">
             <thead>
                 <tr>
