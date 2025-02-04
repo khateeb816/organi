@@ -1,3 +1,4 @@
+
 <footer class="footer spad">
     <div class="container">
         <div class="row">
@@ -95,9 +96,6 @@
         });
     });
 </script>
-
-
-
 </body>
 
 </html>

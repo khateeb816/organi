@@ -88,22 +88,42 @@
                     </div>
                 </div>
             </div>
-            <form action="#">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <input type="text" placeholder="Your name">
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <input type="text" placeholder="Your Email">
-                    </div>
-                    <div class="col-lg-12 text-center">
-                        <textarea placeholder="Your message"></textarea>
-                        <button type="submit" class="site-btn">SEND MESSAGE</button>
-                    </div>
+            <form action="{{url('/submit-form')}}" method="POST">
+                @csrf
+
+                <!-- User ID (Hidden) -->
+                <div class="col-lg-6 col-md-6">
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id ?? '' }}">
+                </div>
+
+                <!-- Name -->
+                <div class="col-lg-6 col-md-6">
+                    <input type="text" name="name" placeholder="Your name" required>
+                </div>
+
+                <!-- Subject -->
+                <div class="col-lg-6 col-md-6">
+                    <input type="text" name="subject" placeholder="Subject" required>
+                </div>
+
+                <!-- Message -->
+                <div class="col-lg-12 text-center">
+                    <textarea name="message" placeholder="Your message" required></textarea>
+                </div>
+
+                <!-- Rating (Select with Stars) -->
+
+
+                <!-- Submit Button -->
+                <div class="col-lg-12 text-center">
+                    <button type="submit" class="site-btn">SEND MESSAGE</button>
                 </div>
             </form>
         </div>
     </div>
+
+
+   
     <!-- Contact Form End -->
 
     <!-- Footer Section Begin -->
