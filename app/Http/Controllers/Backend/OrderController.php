@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\coupon;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Payment;
@@ -63,6 +64,15 @@ class OrderController extends Controller
             ]
         );
 
+        if (session('discount')) {
+            $coupon = coupon::find(session('discount'));
+            $coupon->status = 'Used';
+            $coupon->save();
+
+            session()->forget('discount');
+            session()->forget('discountPrecentage');
+        }
+
         Cart::where('user_id', Auth::id())->delete();
 
         return redirect('/paymentform/' . $orderId)->with('success', 'Order placed successfully!');
@@ -111,19 +121,19 @@ class OrderController extends Controller
 
     public function showorders()
     {
-        $orders = Order::with('product', 'payment')->get();
+        $orders = Order::all();
         return view('backend.admin.order.index', compact('orders'));
     }
     public function showcancellations()
     {
-        $orders = Order::with('product', 'payment')->where('status', 'Cancel Request')->get();
+        $orders = Order::where('status', 'Cancel Request')->get();
         return view('backend.admin.order.cancellations',  compact('orders'));
     }
 
     public function showorderdetails($id)
     {
 
-        $order = Order::with(['orderdetails.product', 'user', 'payment'])
+        $order = Order::with(['orderdetails.product'])
             ->find($id);
         return view('backend.admin.order.view', compact('order'));
     }
@@ -138,7 +148,7 @@ class OrderController extends Controller
 
     public function showOrderRecipt($id)
     {
-        $order = Order::with(['orderdetails.product', 'user', 'payment'])
+        $order = Order::with(['orderdetails.product'])
             ->find($id);
         return view('frontend.checkout.recipt', compact('order'));
     }

@@ -27,21 +27,6 @@
 </head>
 
 <body>
-
-    <!--*******************
-        Preloader start
-    ********************-->
-    {{-- <div id="preloader">
-        <div class="loader">
-            <svg class="circular" viewBox="25 25 50 50">
-                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3"
-                    stroke-miterlimit="10" />
-            </svg>
-        </div>
-    </div> --}}
-    <!--*******************
-        Preloader end
-    ********************-->
     <style>
         a {
             text-decoration: none;
@@ -99,20 +84,20 @@
 
     <div class="alert-container">
         @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <div class="alert alert-danger alert-popup" role="alert">
-                    {{ $error }}
-                    <button type="button" class="btn-close" aria-label="Close"
-                        onclick="this.parentElement.style.display='none';"></button>
-                </div>
-            @endforeach
+        @foreach ($errors->all() as $error)
+        <div class="alert alert-danger alert-popup" role="alert">
+            {{ $error }}
+            <button type="button" class="btn-close" aria-label="Close"
+                onclick="this.parentElement.style.display='none';"></button>
+        </div>
+        @endforeach
         @endif
         @if (session('success'))
-            <div class="alert alert-success alert-popup" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" aria-label="Close"
-                    onclick="this.parentElement.style.display='none';"></button>
-            </div>
+        <div class="alert alert-success alert-popup" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" aria-label="Close"
+                onclick="this.parentElement.style.display='none';"></button>
+        </div>
         @endif
     </div>
 

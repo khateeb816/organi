@@ -93,30 +93,48 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <input value="2" type="hidden" name="discount">
                     </div>
 
                     <div class="col-lg-4 col-md-6">
                         <div class="checkout__order">
                             <h4>Your Order</h4>
                             <div class="checkout_order_products">Products <span>Total</span></div>
+
                             @php
                             $subtotal = 0;
-                            $discount = 0;
+                            $discountPercentage = session('discountPrecentage', 0); // Get discount %
                             @endphp
+
                             <ul>
                                 @foreach ($products as $product)
                                 <li>{{ $product->product->name }} : {{ $product->quantity }}
-                                    <span>${{ $product->product->price }}</span>
+                                    <span>${{ number_format($product->product->price, 2) }}</span>
                                 </li>
                                 @php
                                 $subtotal += $product->quantity * $product->product->price;
                                 @endphp
                                 @endforeach
                             </ul>
-                            <div class="checkout_order_subtotal">Subtotal <span>${{ $subtotal }}</span></div>
-                            <div class="checkout_order_total">Total <span>${{ $subtotal - $discount }}</span></div>
-                            <input type="hidden" name="total" value="{{ $subtotal - $discount }}">
+
+                            @php
+                            // Calculate discount amount
+                            $discountAmount = ($subtotal * $discountPercentage) / 100;
+                            $total = $subtotal - $discountAmount;
+                            @endphp
+
+                            <div class="checkout_order_subtotal mb-2">Subtotal <span>${{ number_format($subtotal, 2)
+                                    }}</span></div>
+
+                            @if($discountPercentage > 0)
+                            <div class="checkout_order_subtotal mb-2">Discount ({{ $discountPercentage }}%)
+                                <span>- ${{ number_format($discountAmount, 2) }}</span>
+                            </div>
+                            @endif
+
+                            <div class="checkout_order_total">Total <span>${{ number_format($total, 2) }}</span></div>
+
+                            <input type="hidden" name="discount" value="{{ session('discountPrecentage') ?? 0 }}">
+                            <input type="hidden" name="total" value="{{ $total }}">
                             <button type="submit" class="site-btn">PLACE ORDER</button>
                         </div>
                     </div>

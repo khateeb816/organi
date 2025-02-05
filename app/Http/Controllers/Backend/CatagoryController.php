@@ -41,7 +41,7 @@ class catagoryController extends Controller
 
         $catagory->save();
 
-        return redirect()->route('catagory.index')->with('success', 'Brand added successfully!');
+        return redirect()->route('catagory.index')->with('success', 'Category added successfully!');
     }
 
     public function delete($id)

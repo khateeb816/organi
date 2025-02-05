@@ -5,9 +5,7 @@
 <div class="content-body">
     <div class="container-fluid">
         <h1>Add Coupon</h1>
-        <form action="{{ url('admin/coupon-save') }}" method="POST"
-
-            method="POST">
+        <form action="{{ url('admin/coupon-save') }}" method="POST" method="POST">
             @csrf
             <div class="form-group">
                 <label for="code">Coupon Code</label>
@@ -27,9 +25,12 @@
             <div class="form-group">
                 <label for="status">Status</label>
                 <select name="status" id="status" class="form-control">
-                    <option value="1" {{ isset($coupon) && $coupon->status == 1 ? 'selected' : '' }}>Active
+                    <option value="Active" {{ isset($coupon) && $coupon->status == 'Active' ? 'selected' : '' }}>Active
                     </option>
-                    <option value="0" {{ isset($coupon) && $coupon->status == 0 ? 'selected' : '' }}>Inactive
+                    <option value="Inactive" {{ isset($coupon) && $coupon->status == 'Inactive' ? 'selected' : ''
+                        }}>Inactive
+                    </option>
+                    <option value="Used" {{ isset($coupon) && $coupon->status == 'Used' ? 'selected' : '' }}>Used
                     </option>
                 </select>
             </div>

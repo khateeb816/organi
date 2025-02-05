@@ -9,7 +9,8 @@
             @csrf
             <div class="form-group">
                 <label for="code">Coupon Code</label>
-                <input type="text" name="code" id="code" class="form-control" value="{{ $coupon->code ?? '' }}" required>
+                <input type="text" name="code" id="code" class="form-control" value="{{ $coupon->code ?? '' }}"
+                    required>
             </div>
             <div class="form-group">
                 <label for="percentage">Coupon Percentage</label>
@@ -24,8 +25,13 @@
             <div class="form-group">
                 <label for="status">Status</label>
                 <select name="status" id="status" class="form-control">
-                    <option value="1" {{ isset($coupon) && $coupon->status == 1 ? 'selected' : '' }}>Active</option>
-                    <option value="0" {{ isset($coupon) && $coupon->status == 0 ? 'selected' : '' }}>Inactive</option>
+                    <option value="Active" {{ isset($coupon) && $coupon->status == 'Active' ? 'selected' : '' }}>Active
+                    </option>
+                    <option value="Inactive" {{ isset($coupon) && $coupon->status == 'Inactive' ? 'selected' : ''
+                        }}>Inactive
+                    </option>
+                    <option value="Used" {{ isset($coupon) && $coupon->status == 'Used' ? 'selected' : '' }}>Used
+                    </option>
                 </select>
             </div>
             <button type="submit" class="btn btn-success">Update</button>

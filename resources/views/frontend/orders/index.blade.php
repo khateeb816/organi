@@ -108,8 +108,9 @@
                         <div class="col-md-3">
                             <div class="mt-4">
                                 <!-- Button to trigger the modal -->
-                                <button type="button" class="btn btn-outline-danger" {{ $order->status == 'Cancel
-                                    Request' ? 'disabled' : '' }} data-bs-toggle="modal"
+                                <button type="button" class="btn btn-outline-danger" {{ $order->status == 'Pending' ? ''
+                                    : 'disabled' }}
+                                    data-bs-toggle="modal"
                                     data-bs-target="#cancelOrderModal{{ $order->id }}">
                                     Cancel Order
                                 </button>
@@ -130,10 +131,11 @@
                                                     action="{{ url('/cancel-order/' . $order->id) }}">
                                                     @csrf
                                                     <div class="mb-3">
-                                                        <label for="reason" class="form-label">Reason for
+                                                        <label for="reason{{ $order->id }}" class="form-label">Reason
+                                                            for
                                                             Cancellation</label>
-                                                        <textarea id="reason" name="reason" class="form-control"
-                                                            rows="3" required></textarea>
+                                                        <textarea id="reason{{ $order->id }}" name="reason"
+                                                            class="form-control" rows="3" required></textarea>
                                                     </div>
                                                     <div class="text-end">
                                                         <button type="button" class="btn btn-secondary"
@@ -145,7 +147,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> <!-- End Modal -->
                             </div>
                         </div>
                     </div>
@@ -159,9 +161,8 @@
     <!-- JavaScript for form validation -->
     <script>
         @foreach ($orders as $order)
-        const cancelOrderForm{{ $order->id }} = document.getElementById('cancelOrderForm{{ $order->id }}');
-        cancelOrderForm{{ $order->id }}.addEventListener('submit', function(event) {
-            const reason = document.getElementById('reason').value;
+        document.getElementById('cancelOrderForm{{ $order->id }}').addEventListener('submit', function(event) {
+            const reason = document.getElementById('reason{{ $order->id }}').value;
             if (!reason) {
                 alert('Please provide a reason for cancellation.');
                 event.preventDefault();

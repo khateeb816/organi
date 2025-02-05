@@ -13,16 +13,9 @@ class Payment extends Model
     // Define the fillable attributes to prevent mass assignment vulnerabilities
     protected $fillable = [
         'user_id',
-        'order_id',
         'card_name',
         'card_number',
         'card_expiry',
         'card_cvv',
     ];
-
-    // You can optionally add a relationship to the Order model
-    public function order()
-    {
-        return $this->belongsTo(Order::class, 'order_id');
-    }
 }

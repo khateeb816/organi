@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('catagory_id');
             $table->integer('brand_id');
             $table->integer('sold_items')->default(0);
-            $table->string('status' )->default('pending');
+            $table->string('status')->default('pending');
             $table->string('state')->nullable();
             $table->timestamps();
         });

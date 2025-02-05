@@ -77,6 +77,10 @@
                         <th>Total</th>
                         <td>{{ number_format($order->total ?? 0, 2) }} PKR</td>
                     </tr>
+                    <tr>
+                        <th>Discount</th>
+                        <td>{{ $order->discount }} %</td>
+                    </tr>
                 </table>
             </div>
         </div>

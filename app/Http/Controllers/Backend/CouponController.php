@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Backend;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Catagory;
 use App\Models\Coupon;
 use Illuminate\Support\Facades\Auth;
+
 class CouponController extends Controller
 {
     public function index()
@@ -44,9 +46,9 @@ class CouponController extends Controller
             'code' => 'required|max:255|unique:coupons,code,' . $id,
             'percentage' => 'required|numeric|min:0|max:100',
             'expiry_date' => 'required|date',
-            'status' => 'required|boolean',
+            'status' => 'required',
         ]);
-        
+
         $coupon = Coupon::findOrFail($id);
         $coupon->update($request->all());
 
