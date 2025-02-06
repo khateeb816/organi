@@ -105,12 +105,11 @@
                                 <h5>{{ $order->status }} </h5>
                             </div>
                         </div>
+                        @if($order->status == 'Pending')
                         <div class="col-md-3">
                             <div class="mt-4">
                                 <!-- Button to trigger the modal -->
-                                <button type="button" class="btn btn-outline-danger" {{ $order->status == 'Pending' ? ''
-                                    : 'disabled' }}
-                                    data-bs-toggle="modal"
+                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                     data-bs-target="#cancelOrderModal{{ $order->id }}">
                                     Cancel Order
                                 </button>
@@ -150,6 +149,7 @@
                                 </div> <!-- End Modal -->
                             </div>
                         </div>
+                        @endif
                     </div>
 
                 </div>
