@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Ogani | Template</title>
+    <title>Prime Trading</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{{ asset('frontendAssets/css/owl.carousel.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('frontendAssets/css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('frontendAssets/css/style.css') }}" type="text/css">
+    <link rel="shortcut icon" href="frontendAssets/img/logo.png" type="image/x-icon">
+
 </head>
 
 <body>
@@ -175,7 +177,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="header__logo">
+                    <div class="header__logo" >
                         <a href="{{ url('/') }}"><img src="{{ asset('frontendAssets/img/logo.png') }}" alt=""></a>
                     </div>
                 </div>
@@ -250,11 +252,14 @@
                     </div>
 
                     @if (request()->is('/'))
-                    <div class="hero__item set-bg" data-setbg="{{ asset('img/hero/banner.jpg') }}">
+                    <div class="hero__item set-bg" data-setbg="{{ asset('frontendAssets/img/banner/Banner-1.png') }}">
                         <div class="hero__text">
-                            <span>FRUIT FRESH</span>
-                            <h2>Vegetable <br />100% Organic</h2>
-                            <p>Free Pickup and Delivery Available</p>
+                            <h2>Shop Smart <br />Shop Fast</h2>
+                            <p style="color: white">
+                                Discover the best deals <br>
+                                on top-quality products. <br>
+                                Secure payments, Fast delivery
+                            </p>
                             <a href="{{ url('/shop') }}" class="primary-btn">SHOP NOW</a>
                         </div>
                     </div>
