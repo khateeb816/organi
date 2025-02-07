@@ -24,9 +24,9 @@
                     <td>{{ $message->subject }}</td>
                     <td>{{ Str::limit($message->message, 50) }}</td>
                     <td>
-                        <a href="{{ url('admin/message-reply/' . $message->id) }}"
-                            class="btn btn-primary btn-sm">Reply</a> <a
-                            href="{{ url('admin/message-delete/' . $message->id) }}" class="btn btn-danger btn-sm"
+                        <a href="{{ url('admin/message-detail/' . $message->id) }}"
+                            class="btn btn-primary btn-sm">View</a>
+                        <a href="{{ url('admin/message-delete/' . $message->id) }}" class="btn btn-danger btn-sm"
                             onclick="return confirm('Are you sure you want to delete this message?')">Delete</a>
                     </td>
                 </tr>

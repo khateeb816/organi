@@ -2,39 +2,41 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
+use Stripe\Stripe;
+use Stripe\Token;
+use Stripe\Charge;
 use App\Models\Cart;
-use App\Models\coupon;
+use App\Models\User;
 use App\Models\Order;
-use App\Models\OrderDetail;
+use App\Models\Coupon;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Profile;
-use App\Models\User;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 
 class OrderController extends Controller
 {
-    public function saveorderdetails(Request $request)
+    public function saveOrderDetails(Request $request)
     {
         $request->validate([
             'discount'  => 'nullable',
-            'total'     => 'required',
-            'name'      => 'required',
-            'country'   => 'required',
-            'address'   => 'required',
-            'city'      => 'required',
-            'state'     => 'required',
-            'postcode'  => 'required',
-            'phone'     => 'required',
+            'total'     => 'required|numeric',
+            'name'      => 'required|string',
+            'country'   => 'required|string',
+            'address'   => 'required|string',
+            'city'      => 'required|string',
+            'state'     => 'required|string',
+            'postcode'  => 'required|string',
+            'phone'     => 'required|string',
         ]);
 
         // Create a new order
         $orderId = Order::insertGetId([
             'user_id' => Auth::id(),
-            'discount' => $request->discount,
+            'discount' => $request->discount ?? 0,
             'total' => $request->total,
             'status' => 'pending',
             'created_at' => now(),
@@ -50,6 +52,7 @@ class OrderController extends Controller
             ]);
         }
 
+        // Update user profile with order details
         Profile::updateOrCreate(
             ['user_id' => Auth::id()],
             [
@@ -60,32 +63,33 @@ class OrderController extends Controller
                 'state' => $request->state,
                 'postcode' => $request->postcode,
                 'phone' => $request->phone,
-                'created_at' => now(),
+                'updated_at' => now(),
             ]
         );
 
-        if (session('discount')) {
-            $coupon = coupon::find(session('discount'));
-            $coupon->status = 'Used';
-            $coupon->save();
+        // Handle coupon if applied
+        if (session()->has('discount')) {
+            $coupon = Coupon::find(session('discount'));
+            if ($coupon) {
+                $coupon->status = 'Used';
+                $coupon->save();
+            }
 
-            session()->forget('discount');
-            session()->forget('discountPrecentage');
+            session()->forget(['discount', 'discountPercentage']);
         }
 
+        // Clear user's cart
         Cart::where('user_id', Auth::id())->delete();
 
         return redirect('/paymentform/' . $orderId)->with('success', 'Order placed successfully!');
     }
 
-
-    public function showpaymentform($id)
+    public function showPaymentForm($id)
     {
-        $order = Order::find($id);
+        $order = Order::findOrFail($id);
         $payment = Payment::where('user_id', Auth::id())->first();
         return view('frontend.checkout.payment', compact('payment', 'order'));
     }
-
 
     public function checkoutForm()
     {
@@ -95,61 +99,95 @@ class OrderController extends Controller
 
     public function savePayment(Request $request)
     {
+        // Validate the incoming request
         $request->validate([
-            'card_name'   => 'required|string|max:255',
-            'card_number' => 'required|numeric', // Removed digits limit
-            'card_expiry' => 'required|string', // Updated regex delimiter
-            'card_cvv'    => 'required|numeric', // Removed digits limit
+            'amount' => 'required|numeric',
+            'order_id' => 'required|integer',
+            'stripeToken' => 'required|string',
+            'card_name' => 'required|string',
         ]);
 
-        // Save payment details
-        Payment::updateOrCreate(
-            ['user_id' => Auth::id()],
-            [
-                'card_name'   => $request->card_name,
-                'card_number' => ($request->card_number),
-                'card_expiry' => $request->card_expiry,
-                'card_cvv'    => ($request->card_cvv),
-                'created_at'  => now(),
-            ]
-        );
+        // Set your Stripe secret key
+        Stripe::setApiKey(config('services.stripe.secret'));
 
+        try {
+            // Create a charge using the Stripe token
+            $charge = Charge::create([
+                'amount' => (int)(($request->amount * 280) * 100), // Amount in cents
+                'currency' => 'usd',
+                'source' => $request->stripeToken, // Use the token from the request
+                'description' => 'Order Payment for Order ID: ' . $request->order_id,
+            ]);
 
+            if ($charge->status === 'succeeded') {
+                // Save only necessary payment details
 
-        return redirect('/order-recipt/' . $request->order_id)->with('success', 'Payment completed successfully!');
+                $order = Order::find($request->order_id);
+                if ($order) {
+                    $order->payment_status = 'paid';
+                    $order->save();
+                }
+                Payment::updateOrCreate(
+                    ['user_id' => Auth::id()],
+                    [
+                        'card_name' => $request->card_name,
+                        'card_number' => str_replace(' ', '', $request->card_number), // Remove all spaces
+                        'card_expiry' => $request->card_exp,
+                        'card_cvv' => $request->card_cvv,
+                        'created_at' => now(),
+                    ]
+                );
+
+                return redirect('/order-receipt/' . $request->order_id)->with('success', 'Payment completed successfully!');
+            }
+
+            return back()->with('error', 'Payment failed. Please try again.');
+        } catch (\Stripe\Exception\CardException $e) {
+            // Handle card errors
+            return back()->with('error', 'Payment error: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            // Handle other errors
+            return back()->with('error', 'Payment error: ' . $e->getMessage());
+        }
     }
 
-    public function showorders()
+    public function showOrders()
     {
         $orders = Order::all();
         return view('backend.admin.order.index', compact('orders'));
     }
-    public function showcancellations()
+
+    public function showCancellations()
     {
         $orders = Order::where('status', 'Cancel Request')->get();
-        return view('backend.admin.order.cancellations',  compact('orders'));
+        return view('backend.admin.order.cancellations', compact('orders'));
     }
 
-    public function showorderdetails($id)
+    public function showOrderDetails($id)
     {
+        $order = Order::with(['orderdetails.product'])->findOrFail($id);
 
-        $order = Order::with(['orderdetails.product'])
-            ->find($id);
+        $order->read = 1;
+        $order->save();
         return view('backend.admin.order.view', compact('order'));
     }
-    public function updateorderstatus(Request $request, $id)
+
+    public function updateOrderStatus(Request $request, $id)
     {
-        $order = Order::find($id);
+        $request->validate([
+            'status' => 'required|string',
+        ]);
+
+        $order = Order::findOrFail($id);
         $order->status = $request->status;
         $order->save();
 
         return redirect()->back()->with('success', 'Order status updated successfully.');
     }
 
-    public function showOrderRecipt($id)
+    public function showOrderReceipt($id)
     {
-        $order = Order::with(['orderdetails.product'])
-            ->find($id);
+        $order = Order::with(['orderdetails.product'])->findOrFail($id);
         return view('frontend.checkout.recipt', compact('order'));
     }
 }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->decimal('discount', 10, 2)->nullable();
             $table->decimal('total', 10, places: 2);
             $table->string('status')->default('pending');
+            $table->string('payment_status')->default('pending');
+            $table->boolean('read')->default(0);
             $table->timestamps();
         });
     }

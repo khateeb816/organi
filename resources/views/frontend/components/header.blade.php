@@ -57,9 +57,7 @@
         </div>
         <div class="humberger__menu__widget">
             <div class="header__top__right__language">
-                <img src="img/language.png" alt="">
                 @if (Auth::check())
-                <img src="img/language.png" alt="">
                 <div>{{ Auth::user()->name }}</div>
                 <span class="arrow_carrot-down"></span>
                 <ul>
@@ -97,13 +95,6 @@
             <ul>
                 <li class="active"><a href="{{ url('/') }}">Home</a></li>
                 <li><a href="{{ url('/shop') }}">Shop</a></li>
-                <li><a href="#">Pages</a>
-                    <ul class="header__menu__dropdown">
-                        <li><a href="{{ url('/checkout') }}">Check Out</a></li>
-                        <li><a href="{{ url('/blogDetails') }}">Blog Details</a></li>
-                    </ul>
-                </li>
-                <li><a href="{{ url('/blog') }}">Blog</a></li>
                 <li><a href="{{ url('/contact') }}">Contact</a></li>
             </ul>
         </nav>
@@ -134,7 +125,6 @@
                         <div class="header__top__right">
                             <div class="header__top__right__language">
                                 @if (Auth::check())
-                                <img src="img/language.png" alt="">
                                 <div>{{ Auth::user()->name }}</div>
                                 <span class="arrow_carrot-down"></span>
                                 <ul>
@@ -177,7 +167,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="header__logo" >
+                    <div class="header__logo">
                         <a href="{{ url('/') }}"><img src="{{ asset('frontendAssets/img/logo.png') }}" alt=""></a>
                     </div>
                 </div>
@@ -186,13 +176,6 @@
                         <ul>
                             <li class="active"><a href="{{ url('/') }}">Home</a></li>
                             <li><a href="{{ url('/shop') }}">Shop</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="header__menu__dropdown">
-                                    <li><a href="{{ url('/checkout') }}">Check Out</a></li>
-                                    <li><a href="{{ url('/blogDetails') }}">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="{{ url('/blog') }}">Blog</a></li>
                             <li><a href="{{ url('/contact') }}">Contact</a></li>
                         </ul>
                     </nav>

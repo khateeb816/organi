@@ -105,9 +105,23 @@
                                 <h5>{{ $order->status }} </h5>
                             </div>
                         </div>
-                        @if($order->status == 'Pending')
                         <div class="col-md-3">
-                            <div class="mt-4">
+                            <div class="mt-3">
+                                <p class="text-muted mb-2">Payment</p>
+                                <h5>{{ $order->payment_status }} </h5>
+                            </div>
+                        </div>
+                        @if($order->payment_status == 'pending')
+                        <div class="col-md-9">
+                            <div class="mt-3">
+                                <a href="{{ url('paymentform/' . $order->id) }}" class="btn btn-info">Pay Now</a>
+                            </div>
+                        </div>
+
+                        @endif
+                        @if($order->status == 'pending')
+                        <div class="col-md-3">
+                            <div class="mt-3">
                                 <!-- Button to trigger the modal -->
                                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
                                     data-bs-target="#cancelOrderModal{{ $order->id }}">

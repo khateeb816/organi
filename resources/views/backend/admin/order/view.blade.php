@@ -70,6 +70,10 @@
                         </td>
                     </tr>
                     <tr>
+                        <th>Payment</th>
+                        <td>{{ $order->payment_status }} </td>
+                    </tr>
+                    <tr>
                         <th>Subtotal</th>
                         <td>{{ $subtotal }} PKR</td>
                     </tr>
