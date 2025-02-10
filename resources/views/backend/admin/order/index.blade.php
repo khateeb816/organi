@@ -5,6 +5,59 @@
 <div class="content-body p-3 bg-light">
     <div class="table-responsive">
         <h2>Orders:</h2>
+        <br>
+        <div class="row">
+            <div class="col-lg-3 col-sm-6">
+                <div class="card gradient-1">
+                    <div class="card-body">
+                        <h3 class="card-title text-white">Orders Today</h3>
+                        <div class="d-inline-block">
+                            <h2 class="text-white">{{ $ordersToday }}</h2>
+                            <p class="text-white mb-0">{{ \Carbon\Carbon::today()->format('M d, Y') }}</p>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i class="fa fa-shopping-cart"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card gradient-2">
+                    <div class="card-body">
+                        <h3 class="card-title text-white">Orders This Week</h3>
+                        <div class="d-inline-block">
+                            <h2 class="text-white">{{ $ordersThisWeek }}</h2>
+                            <p class="text-white mb-0">{{ \Carbon\Carbon::now()->startOfWeek()->format('M d, Y') }} - {{
+                                \Carbon\Carbon::now()->endOfWeek()->format('M d, Y') }}</p>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i class="fa fa-money"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card gradient-3">
+                    <div class="card-body">
+                        <h3 class="card-title text-white">Orders This Month</h3>
+                        <div class="d-inline-block">
+                            <h2 class="text-white">{{ $ordersThisMonth }}</h2>
+                            <p class="text-white mb-0">{{ \Carbon\Carbon::now()->format('F Y') }}</p>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card gradient-4">
+                    <div class="card-body">
+                        <h3 class="card-title text-white">Orders This Year</h3>
+                        <div class="d-inline-block">
+                            <h2 class="text-white">{{ $ordersThisYear }}</h2>
+                            <p class="text-white mb-0">{{ \Carbon\Carbon::now()->format('Y') }}</p>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i class="fa fa-heart"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <table id="table" class="display table table-striped table-bordered w-100">
             <thead>
                 <tr>

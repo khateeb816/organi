@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
-use Stripe\Stripe;
 use Stripe\Token;
+use Carbon\Carbon;
 use Stripe\Charge;
+use Stripe\Stripe;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Order;
@@ -154,8 +155,28 @@ class OrderController extends Controller
 
     public function showOrders()
     {
+        $ordersToday = Order::whereDate('created_at', Carbon::today())->count();
+
+        // Orders This Week
+        $ordersThisWeek = Order::whereBetween('created_at', [
+            Carbon::now()->startOfWeek(),
+            Carbon::now()->endOfWeek()
+        ])->count();
+
+        // Orders This Month
+        $ordersThisMonth = Order::whereMonth('created_at', Carbon::now()->month)->count();
+
+        // Orders This Year
+        $ordersThisYear = Order::whereYear('created_at', Carbon::now()->year)->count();
+
         $orders = Order::all();
-        return view('backend.admin.order.index', compact('orders'));
+        return view('backend.admin.order.index', compact(
+            'orders',
+            'ordersToday',
+            'ordersThisWeek',
+            'ordersThisMonth',
+            'ordersThisYear'
+        ));
     }
 
     public function showCancellations()

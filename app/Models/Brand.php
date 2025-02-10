@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,4 +36,9 @@ class Brand extends Model
         'address' => 'string',
         'number' => 'string',
     ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'brand_id', 'id');
+    }
 }

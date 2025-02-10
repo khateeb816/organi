@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\coupon;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -76,5 +77,43 @@ class CartController extends Controller
             $cart->save();
         }
         return response()->json(['success' => true]);
+    }
+    public function addToCartWithQuantity(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'You need to login first.');
+        }
+
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1'
+        ]);
+
+        $product_id = $request->product_id;
+        $quantity = $request->quantity;
+
+        $product = Product::find($product_id);
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found.');
+        }
+
+        $cartItem = Cart::where('user_id', $user->id)
+            ->where('product_id', $product_id)
+            ->first();
+
+        if ($cartItem) {
+            $cartItem->quantity += $quantity;
+            $cartItem->save();
+        } else {
+            Cart::create([
+                'user_id' => $user->id,
+                'product_id' => $product_id,
+                'quantity' => $quantity
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Product added to cart successfully.');
     }
 }
