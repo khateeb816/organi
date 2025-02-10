@@ -9,7 +9,7 @@
                 @foreach ($brands as $brand)
                 <div class="col-lg-3">
                     <div class="categories__item set-bg" data-setbg="{{ asset($brand->logo) }}">
-                        <h5><a href="#">{{ $brand->name }}</a></h5>
+                        <h5><a href="{{ url('/shop?brand=' .$brand->id) }}">{{ $brand->name }}</a></h5>
                     </div>
                 </div>
                 @endforeach

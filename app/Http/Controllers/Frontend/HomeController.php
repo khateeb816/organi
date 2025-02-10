@@ -43,6 +43,7 @@ class HomeController extends Controller
     public function shopGrid(Request $request)
     {
         $categoryId = $request->query('category');
+        $brandId = $request->query('brand');
         $minPrice = $request->query('minPrice');
         $maxPrice = $request->query('maxPrice');
 
@@ -50,6 +51,9 @@ class HomeController extends Controller
 
         if ($categoryId) {
             $query->where('catagory_id', $categoryId);
+        }
+        if ($brandId) {
+            $query->where('brand_id', $brandId);
         }
 
         if ($minPrice && $maxPrice) {
