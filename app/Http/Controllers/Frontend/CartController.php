@@ -16,11 +16,16 @@ class CartController extends Controller
     {
         if ($request->discount) {
             $discount = coupon::where('code', $request->discount)->first();
-            session(['discount' => $discount->id]);
-            session(['discountPrecentage' => $discount->percentage]);
+            if ($discount) {
+                session(['discount' => $discount->id]);
+                session(['discountPrecentage' => $discount->percentage]);
+            } else {
+                session(['discountError' => 'Invalid coupon code']);
+            }
         } else {
             session()->forget('discount');
             session()->forget('discountPrecentage');
+            session()->forget('discountError');
         }
         $carts = Cart::where('user_id', auth()->id())->with('product')->get();
         return view('frontend.shop.shopingCart', compact('carts'));

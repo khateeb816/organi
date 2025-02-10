@@ -57,7 +57,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-xl-8">
+        <div class="col-xl-12">
             <div class="me-4">
                 <h2 class="text-truncate">My Orders:</h2>
             </div>

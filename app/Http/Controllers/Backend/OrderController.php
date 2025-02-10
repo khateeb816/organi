@@ -81,13 +81,14 @@ class OrderController extends Controller
         // Clear user's cart
         Cart::where('user_id', Auth::id())->delete();
 
-        return redirect('/paymentform/' . $orderId)->with('success', 'Order placed successfully!');
+        return redirect('/paymentform/' . $orderId)->with('success', 'Order placed successfully! Pay Now');
     }
 
     public function showPaymentForm($id)
     {
         $order = Order::findOrFail($id);
         $payment = Payment::where('user_id', Auth::id())->first();
+
         return view('frontend.checkout.payment', compact('payment', 'order'));
     }
 

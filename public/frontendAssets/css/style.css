@@ -737,9 +737,10 @@ ol {
     display: flex;
     align-items: center;
     padding: 50px;
-    height:500px ;
+    height: 500px;
     width: 100%;
 }
+
 .hero__item::before {
     content: "";
     position: absolute;
@@ -748,9 +749,11 @@ ol {
     width: 100%;
     height: 100%;
     background: inherit;
-    opacity: 0; /* Adjust opacity (0 = fully transparent, 1 = fully visible) */
+    opacity: 0;
+    /* Adjust opacity (0 = fully transparent, 1 = fully visible) */
     z-index: -1;
 }
+
 .hero__text span {
     font-size: 14px;
     text-transform: uppercase;
@@ -3677,25 +3680,17 @@ ol {
 .checked {
     color: orange;
 }
+
 .star-rating {
     font-size: 24px;
     cursor: pointer;
 }
 
-.customer-review{
-
-}
+.customer-review {}
 
 
-.customer-name{
+.customer-name {}
 
-}
+.customer-rating {}
 
-.customer-rating{
-
-}
-
-.customer-reviewed{
-
-}
-
+.customer-reviewed {}

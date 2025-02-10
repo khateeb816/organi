@@ -13,6 +13,7 @@ class HomeController extends Controller
     //
     public function home()
     {
+
         $brands = Brand::all();
         $featured = Product::where('state', 'featured')
             ->where('status', 'active')

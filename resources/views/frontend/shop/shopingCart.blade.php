@@ -101,6 +101,9 @@
                             <input type="text" placeholder="Enter your coupon code" required name="discount">
                             <button type="submit" class="site-btn">APPLY COUPON</button>
                         </form>
+                        @if(session('discountError'))
+                        <p class="text-danger pt-2" style="padding-left:10px;">{{ session('discountError') }}</p>
+                        @endif
                     </div>
                 </div>
             </div>

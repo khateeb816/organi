@@ -236,8 +236,4 @@
 </section>
 
 <!-- Latest Product Section End -->
-
-
-<!-- Footer Section Begin -->
-@include('frontend.components.footer ');
-<!-- Footer Section End -->
+@include('frontend.components.footer')

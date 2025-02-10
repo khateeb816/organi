@@ -10,43 +10,42 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     //
-    public function UserRegisterSave(Request $request){
+    public function UserRegisterSave(Request $request)
+    {
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
-            // 'password_confirmation' => 'required_with:password|same:password|min:6'
         ]);
 
         $data = $request->all();
         $data['name'] = $request->name;
         $data['email'] = $request->email;
         $data['password'] = Hash::make($request->password);
-        // $data['password_confirmation'] = bcrypt($request->password_confirmation);
         $data['role'] = 'customer';
         $status = \App\Models\User::create($data);
-        if($status){
+        if ($status) {
             return redirect()->route('UserLoginForm')->with('success', 'Successfully registered');
-        }else{
+        } else {
             return back()->with('error', 'Something went wrong');
         }
-
-
     }
-    public function UserLoginForm(){
+    public function UserLoginForm()
+    {
         return view('frontend.auth.login');
     }
 
-    public function UserLoginCheck(Request $request){
+    public function UserLoginCheck(Request $request)
+    {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
+        $remember = $request->has('remember');
 
-        if (Auth::attempt(['email'=> $request->email, 'password' => $request->password])) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {
 
-            if(Auth::user()->role == 'customer'){
-
+            if (Auth::user()->role == 'customer') {
                 return redirect('/');
             }
         }
@@ -60,7 +59,8 @@ class AuthController extends Controller
         return redirect()->back();
     }
 
-    public function UserRegisterFrom(){
+    public function UserRegisterFrom()
+    {
         return view('frontend.auth.register');
     }
 }

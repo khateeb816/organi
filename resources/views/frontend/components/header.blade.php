@@ -25,7 +25,9 @@
     <link rel="stylesheet" href="{{ asset('frontendAssets/css/slicknav.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{ asset('frontendAssets/css/style.css') }}" type="text/css">
     <link rel="shortcut icon" href="frontendAssets/img/logo.png" type="image/x-icon">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -87,22 +89,26 @@
                 </ul>
                 @else
                 <a href="{{ url('login') }}" style="color: black;"><i class="fa fa-user"></i>
-                    Login</a>
+                    Login</a>&nbsp; |&nbsp;
+                <a href="{{ url('register') }}" style="color: black;"><i class="fa fa-user"></i>
+                    Register</a>
                 @endif
             </div>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="{{ url('/') }}">Home</a></li>
-                <li><a href="{{ url('/shop') }}">Shop</a></li>
-                <li><a href="{{ url('/contact') }}">Contact</a></li>
+                <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="{{ url('/') }}">Home</a></li>
+                <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="{{ url('/shop') }}">Shop</a></li>
+                <li class="{{ Request::is('contact') ? 'active' : '' }}"><a href="{{ url('/contact') }}">Contact</a>
+                </li>
             </ul>
+
         </nav>
         <div id="mobile-menu-wrap"></div>
         <div class="humberger__menu__contact">
             <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                <li>Free Shipping for all Order of $99</li>
+                <li><i class="fa fa-envelope"></i> support@prime.com</li>
+                <li>The quality you desire is guaranteed.</li>
             </ul>
         </div>
     </div>
@@ -116,8 +122,8 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__left">
                             <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                                <li>Free Shipping for all Order of $99</li>
+                                <li><i class="fa fa-envelope"></i> support@prime.com</li>
+                                <li>The quality you desire is guaranteed.</li>
                             </ul>
                         </div>
                     </div>
@@ -156,7 +162,9 @@
                                 </ul>
                                 @else
                                 <a href="{{ url('login') }}" style="color: black;"><i class="fa fa-user"></i>
-                                    Login</a>
+                                    Login</a>&nbsp; |&nbsp;
+                                <a href="{{ url('register') }}" style="color: black;"><i class="fa fa-user"></i>
+                                    Register</a>
                                 @endif
                             </div>
                         </div>
@@ -174,10 +182,13 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="{{ url('/') }}">Home</a></li>
-                            <li><a href="{{ url('/shop') }}">Shop</a></li>
-                            <li><a href="{{ url('/contact') }}">Contact</a></li>
+                            <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="{{ url('/') }}">Home</a></li>
+                            <li class="{{ Request::is('shop') ? 'active' : '' }}"><a href="{{ url('/shop') }}">Shop</a>
+                            </li>
+                            <li class="{{ Request::is('contact') ? 'active' : '' }}"><a
+                                    href="{{ url('/contact') }}">Contact</a></li>
                         </ul>
+
                     </nav>
                 </div>
                 <div class="col-lg-3">
@@ -214,7 +225,7 @@
     <section class="hero">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-lg-12">
                     <div class="hero__search">
                         <div class="hero__search__form">
                             <form action="{{ url('/search-item') }}" method="POST">
@@ -235,9 +246,9 @@
                     </div>
 
                     @if (request()->is('/'))
-                    <div class="hero__item set-bg" data-setbg="{{ asset('frontendAssets/img/banner/Banner-1.png') }}">
+                    <div class="hero__item set-bg" data-setbg="{{ asset('frontendAssets/img/banner/Banner-2.jpg') }}">
                         <div class="hero__text">
-                            <h2>Shop Smart <br />Shop Fast</h2>
+                            <h2 style="color: white">Shop Smart <br />Shop Fast</h2>
                             <p style="color: white">
                                 Discover the best deals <br>
                                 on top-quality products. <br>

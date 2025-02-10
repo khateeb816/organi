@@ -26,27 +26,34 @@
 
                         <div class="form-group">
                             <label for="card_name">Cardholder Name</label>
-                            <input type="text" name="card_name" id="card_name" class="form-control"
+                            <input type="text" name="card_name" id="card_name"
+                                value="{{ old('card_name', $payment->card_name ?? '') }}" class="form-control"
                                 placeholder="John Doe" required>
+
                         </div>
 
                         <div class="form-group">
                             <label for="card_number">Card Number</label>
-                            <input type="text" id="card_number" name='card_number' class="form-control card-number"
-                                inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456" required>
+                            <input type="text" id="card_number" name='card_number'
+                                value="{{ old('card_number', $payment->card_number ?? '') }}"
+                                class="form-control card-number" inputmode="numeric" maxlength="19"
+                                placeholder="1234 5678 9012 3456" required>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="card_expiry">Expiry Date</label>
-                                <input type="text" id="card_expiry" class="form-control card-expiry-month"
-                                    inputmode="numeric" name="card_exp" maxlength="5" placeholder="MM/YY" required>
+                                <input type="text" value="{{ old('card_exp', $payment->card_expiry ?? '') }}"
+                                    id="card_expiry" class="form-control card-expiry-month" inputmode="numeric"
+                                    name="card_exp" maxlength="5" placeholder="MM/YY" required>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="card_cvv">CVV</label>
-                                <input type="text" name="card_cvv" id="card_cvv" class="form-control card-cvc"
-                                    inputmode="numeric" maxlength="4" placeholder="123" required>
+                                <input type="text" name="card_cvv" id="card_cvv"
+                                    value="{{ old('card_cvv', $payment->card_cvv ?? '') }}"
+                                    class="form-control card-cvc" inputmode="numeric" maxlength="4" placeholder="123"
+                                    required>
                             </div>
                         </div>
 
