@@ -1,0 +1,308 @@
+************************************************************.env***********************************************************************
+************************************************************.env***********************************************************************
+************************************************************.env***********************************************************************
+************************************************************.env***********************************************************************
+************************************************************.env***********************************************************************
+************************************************************.env***********************************************************************
+************************************************************.env***********************************************************************
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:PGM4HwhjGF64SjaIk3oJLPkwtqBtJAWapxKgPKvGsDc=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+LOG_CHANNEL=stack
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=eco_final
+DB_USERNAME=root
+DB_PASSWORD=
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=sync
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+
+MEMCACHED_HOST=127.0.0.1
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_MAILER=smtp
+MAIL_HOST=mailpit
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_HOST=
+PUSHER_PORT=443
+PUSHER_SCHEME=https
+PUSHER_APP_CLUSTER=mt1
+
+VITE_APP_NAME="${APP_NAME}"
+VITE_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
+VITE_PUSHER_HOST="${PUSHER_HOST}"
+VITE_PUSHER_PORT="${PUSHER_PORT}"
+VITE_PUSHER_SCHEME="${PUSHER_SCHEME}"
+VITE_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+STRIPE_KEY=pk_test_51NBfWfKPSaRDhVEdeB7lk1s9xe6YDsITgyO4EfpgrJESjgXGUO8EX5WPCzkS6KgzCWddcG6Ay4ejMqQB6dRIo0FI00v3rVBpAj
+STRIPE_SECRET=sk_test_51NBfWfKPSaRDhVEdRHxtTubX5OQmx1Mtj3P1OtuKH3zpyI8LatYX1iJ6ls0LCWoZiDDVuuggBrmrYtVE5jowb8Hq00USWXGRSW
+
+
+GOOGLE_CLIENT_ID=687678923125-eltiv3rl56mto8bipbd235amr0l8ecjj.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=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
+GOOGLE_REDIRECT_URI=http://127.0.0.1:8000/auth/google/callback
+
+
+
+
+
+
+
+************************************************************Web.php***********************************************************************
+************************************************************Web.php***********************************************************************
+************************************************************Web.php***********************************************************************
+************************************************************Web.php***********************************************************************
+************************************************************Web.php***********************************************************************
+************************************************************Web.php***********************************************************************
+************************************************************Web.php***********************************************************************
+
+
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\backend\BrandController;
+use App\Http\Controllers\Backend\OrderController;
+use App\Http\Controllers\Frontend\AuthController;
+use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Backend\CouponController;
+use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Frontend\ReviewController;
+use App\Http\Controllers\Frontend\SocialController;
+use App\Http\Controllers\Backend\CatagoryController;
+use App\Http\Controllers\Frontend\WishlistController;
+use App\Http\Controllers\Backend\AuthController as BackendAuthController;
+use App\Http\Controllers\Frontend\OrderController as FrontendOrderController;
+use App\Http\Controllers\Backend\ContactController as BackendContactController;
+use App\Http\Controllers\Frontend\ContactController as FrontendContactController;
+use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
+
+
+
+//    Frontend Routes Start
+
+// Auth routes
+
+Route::get('/register', [AuthController::class, 'UserRegisterFrom'])->name('UserRegisterFrom');
+Route::post('/register-save-user', [AuthController::class, 'UserRegisterSave'])->name('UserRegisterSave');
+Route::get('/login', [AuthController::class, 'UserLoginForm'])->name('UserLoginForm');
+Route::post('/login-check-user', [AuthController::class, 'UserLoginCheck'])->name('UserLoginCheck');
+Route::post('/logout', [AuthController::class, 'Userlogout'])->name('Userlogout');
+
+// Social Auth Routes
+Route::get('auth/{provider}', [SocialController::class, 'redirectToProvider']);
+Route::get('auth/{provider}/callback', [SocialController::class, 'handleProviderCallback']);
+
+
+// Pages Controller
+Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/shop', [HomeController::class, 'shopGrid'])->name('shopGrid');
+Route::get('/shopDetails', [HomeController::class, 'shopDetails'])->name('shopDetails');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+
+// Search item
+Route::post('/search-item', [FrontendProductController::class, 'searchItem'])->name('searchItem');
+
+
+// Product-details
+Route::get('/product-details/{id}', [FrontendProductController::class, 'productDetails'])->name('productDetails');
+
+Route::middleware('auth.user')->group(function () {
+
+    // Cart Controller
+    Route::get('/shopingCart', [CartController::class, 'shopingCart'])->name('shopingCart');
+    Route::get('/add-to-cart/{id}/{quantity?}', [CartController::class, 'addToCart'])->name('addToCart');
+    Route::get('/remove-cart-item/{id}', [CartController::class, 'removeCartItem'])->name('remove.cart.item');
+    Route::post('/update-cart', [CartController::class, 'updateCartItem'])->name('update.cart.item');
+    Route::post('/add-to-cart-quanitity', [CartController::class, 'addToCartWithQuantity'])->name('addToCartWithQuantity');
+
+    //Order Controller
+    Route::get('/orders', [FrontendOrderController::class, 'showorders']);
+    Route::get('/order-detail/{id}', [FrontendOrderController::class, 'showorderdetails']);
+    Route::post('/cancel-order/{id}', [FrontendOrderController::class, 'cancelOrders']);
+    Route::post('/place-order', [OrderController::class, 'placeorder'])->name('placeOrder');
+    Route::get('/checkout', [OrderController::class, 'checkoutForm'])->name('checkoutForm');
+    Route::post('/saveOrder', [OrderController::class, 'saveorderdetails'])->name('orderdetails');
+
+    Route::get('/paymentform/{id}', [OrderController::class, 'showpaymentform'])->name('showpaymentform');
+    Route::get('/order-receipt/{id}', [OrderController::class, 'showOrderReceipt'])->name('showOrderRecipt');
+    Route::post('/savepayment', [OrderController::class, 'savepayment'])->name('save.payment');
+
+    // Review routes
+    Route::post('/save-review', [ReviewController::class, 'saveReview'])->name('saveReview');
+
+    // Wishlist
+    Route::get('/wishlist', [WishlistController::class, 'Wishlist'])->name('Wishlist');
+    Route::get('/add-to-wishlist/{id}', [WishlistController::class, 'addToWishlist'])->name('addToWishlist');
+    Route::get('/move-to-cart/{id}', [WishlistController::class, 'moveToCart'])->name('wishlist.moveToCart');
+    Route::get('/remove-wishlist-item/{id}', [WishlistController::class, 'remove'])->name('wishlist.remove');
+    Route::get('/remove-from-wishlist/{id}', [WishlistController::class, 'removeItem'])->name('wishlist.remove.item');
+    //Contact
+    Route::post('/submit-form', [FrontendContactController::class, 'submitform']);
+
+    // frontend routes end
+});
+
+
+// Admin Authentication
+
+Route::get('admin/login', [BackendAuthController::class, 'showLoginForm'])->name('login');
+Route::post('admin/login-check', [BackendAuthController::class, 'login']);
+Route::get('admin/logout', [BackendAuthController::class, 'logout'])->name('logout');
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+
+    // ====================   dashboard
+    Route::get('/dash', [BackendAuthController::class, 'showDashboard'])->name('dashboard');
+
+    // ========================user
+
+    // user page
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
+
+    Route::get('/user-add', [UserController::class, 'add'])->name('user.add');
+
+    Route::post('/user-save', [UserController::class, 'save'])->name('user.save');
+
+    Route::get('/user-delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+
+    Route::get('/user-edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+
+    Route::post('/user-update/{id}', [UserController::class, 'update'])->name('user.update');
+
+    // Category Routes
+
+    Route::get('/category', [CatagoryController::class, 'index'])->name('catagory.index');
+
+    Route::get('/catagory-add', [CatagoryController::class, 'add'])->name('catagory.add');
+
+    Route::post('/catagory-save', [CatagoryController::class, 'save'])->name('catagory.save');
+
+    Route::get('/catagory-delete/{id}', [CatagoryController::class, 'delete'])->name('catagory.delete');
+
+    Route::get('/catagory-edit/{id}', [CatagoryController::class, 'edit'])->name('catagory.edit');
+
+    Route::post('/catagory-update/{id}', [CatagoryController::class, 'update'])->name('catagory.update');
+
+    // brand Page
+
+    Route::get('/brand', [BrandController::class, 'index'])->name('brand.index');
+
+    Route::get('/brand-add', [BrandController::class, 'add'])->name('brand.add');
+
+    Route::post('/brand-save', [BrandController::class, 'save'])->name('brand.save');
+
+    Route::get('/brand-delete/{id}', [BrandController::class, 'delete'])->name('brand.delete');
+
+    Route::get('/brand-view/{id}', [BrandController::class, 'view'])->name('brand.view');
+
+    Route::get('/brand-edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
+
+    Route::post('/update-brand-image/{id}', [BrandController::class, 'updateBrandImage'])->name('updateBrandImage');
+
+    Route::post('/brand-update/{id}', [BrandController::class, 'update'])->name('brand.update');
+
+    Route::get('/brand-member/{id}', [BrandController::class, 'member'])->name('brand.member');
+
+    Route::get('/member-add/{id}', [BrandController::class, 'addMember'])->name('member.add');
+
+    Route::post('/member-save', [BrandController::class, 'saveMember'])->name('member.save');
+
+    Route::get('/member-edit/{id}', [BrandController::class, 'editMember'])->name('member.edit');
+
+    Route::post('/member-update/{id}', [BrandController::class, 'updateMember'])->name('member.update');
+
+    Route::get('/member-delete/{id}', [BrandController::class, 'deleteMember'])->name('member.delete');
+
+    Route::get('/brand-product/{id}', [BrandController::class, 'showProduct'])->name('brand.product.index');
+
+    Route::get('/brand-product-add/{id}', [BrandController::class, 'addproduct'])->name('brand-product.add');
+
+    Route::post('/brand-product-save', [BrandController::class, 'saveproduct'])->name('brand-product.save');
+
+    Route::get('/brand-product-edit/{id}', [BrandController::class, 'editproduct'])->name('brand-product.edit');
+
+    Route::post('/brand-product-update/{id}', [BrandController::class, 'updateproduct'])->name('brand-product.update');
+
+    Route::get('/brand-product-delete/{id}', [BrandController::class, 'deleteproduct'])->name('brand-product.delete');
+
+    Route::get('/brand-product-status/{id}/{status}', [BrandController::class, 'updateStatus'])->name('admin.brand.status.update');
+
+    Route::get('/brand-product-view/{id}', [BrandController::class, 'viewProduct'])->name('admin.brand.product.view');
+
+    //product page
+
+    Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+
+    Route::get('/product-add', [ProductController::class, 'add'])->name('product.add');
+
+    Route::post('/product-save', [ProductController::class, 'save'])->name('product.save');
+
+    Route::post('/product-update/{id}', [ProductController::class, 'update'])->name('product.update');
+
+    Route::get('/product-delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+
+    Route::get('/product-view/{id}', [ProductController::class, 'view'])->name('product.view');
+
+    Route::get('/product-edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+
+    // Coupon routes
+
+
+    Route::get('/coupon', [CouponController::class, 'index'])->name('index');
+
+    Route::get('/coupon-add', [CouponController::class, 'add'])->name('add');
+
+    Route::post('/coupon-save', [CouponController::class, 'save'])->name('coupon.save');
+
+    Route::get('/coupon-edit/{id}', [CouponController::class, 'edit'])->name('coupon.edit');
+
+    Route::post('/coupon-update/{id}', [CouponController::class, 'update'])->name('admin.coupon.update');
+
+    Route::get('/coupon-delete/{id}', [CouponController::class, 'delete'])->name('coupon.delete');
+
+
+
+    Route::get('/cancellation', [OrderController::class, 'showcancellations']);
+    Route::get('/orders', [OrderController::class, 'showorders']);
+    Route::get('/order-detail/{id}', [OrderController::class, 'showorderdetails']);
+    Route::post('/order/updatestatus/{id}', [OrderController::class, 'updateorderstatus']);
+
+    //contact routes
+    Route::get('/messages', [BackendContactController::class, 'showmessages']);
+    Route::get('/message-detail/{id}', [BackendContactController::class, 'showMessageDetails']);
+
+    Route::get('/message-delete/{id}', [BackendContactController::class, 'deleteMessage']);
+});
